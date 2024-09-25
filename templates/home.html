@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEVASETU</title>
+    
+    <!-- Slick Carousel CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!-- Font Awesome for social media icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- Inline CSS -->
+<style>
+   /* General Styles */
+   * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+   }
+   
+   body {
+       font-family: Arial, sans-serif;
+       line-height: 1.6;
+   }
+   
+   .container {
+       width: 100%;
+       margin: 0 auto;
+   }
+   
+   /* Sticky Navbar */
+   header {
+       position: sticky;
+       top: 0;
+       background-color: rgba(220, 193, 166, 0.8); /* Light brown with slight transparency */
+       padding: 10px 0;
+       z-index: 1000;
+       border-radius: 0; /* Remove rounded corners, making the edges straight */
+       backdrop-filter: blur(5px); /* Adds a blur effect for the transparency */
+   }
+   
+   /* Logo and Title Styles */
+   .logo-tittle img {
+    height: 60px;
+    padding:0;
+    width: 60px;
+    margin-left: 50px;
+    margin-right: 10px;
+    position: relative;
+    top: 10px; /* Reset logo position */
+}
+   
+   .site-title {
+       color: #fff; /* Keep the font color white */
+       font-size: 20px;
+       position: relative;
+       top: 20px; /* Move the title downwards */
+   }
+   
+   /* Navigation Links */
+   .nav-links {
+       list-style: none;
+       display: flex;
+       justify-content: flex-end;
+       align-items: center;
+       gap: 15px;
+   }
+   
+   .nav-links li a {
+       text-decoration: none;
+       color: #000; /* Change link color to black for contrast */
+       font-weight: bold;
+       position: relative;
+       top: -5px;
+       background-color: rgba(255, 255, 255, 0.7); /* Light transparent background */
+       padding: 10px 20px;
+       border-radius: 60px; /* Rounded corners */
+   }
+   
+   .nav-links li a:hover {
+       background-color: rgba(255, 255, 255, 0.9); /* Slightly darker on hover */
+   }
+   
+   
+   /* General Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    padding-top: 60px; /* Padding for the top */
+}
+
+/* Modal Content Styles */
+.modal-content {
+    background-color: rgba(220, 193, 166, 0.8); /* Light brown color with 80% opacity */
+    color: #fff; /* White text */
+    border: 2px solid rgba(139, 69, 19, 1); /* Dark brown border */
+    margin: 5% auto; /* Center the modal with margin */
+    padding: 20px; /* Padding inside the modal */
+    width: 80%; /* Modal width */
+    max-width: 800px; /* Maximum modal width */
+    border-radius: 10px; /* Rounded corners */
+    position: relative; /* Maintain relative positioning */
+    backdrop-filter: blur(5px); /* Adds a blur effect for background content */
+    overflow: auto; /* Scroll if content exceeds modal height */
+}
+
+/* Search Results Content (if needed) */
+.search-results-content {
+    background-color: rgba(220, 193, 166, 0.8); /* Light brown background with transparency */
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff; /* Text color */
+    width: 70%; /* Further reduce the width of the modal */
+    max-width: 500px; /* Decrease the maximum width */
+    margin: 0 auto; /* Center the modal */
+    border: 2px solid rgba(220, 193, 166, 1); /* Border with a matching color, but fully opaque */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Close Button */
+.close {
+    color: #fff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    z-index: 1001; /* Ensure it stays on top of the modal content */
+}
+
+.close:hover,
+.close:focus {
+    color: #ccc;
+    text-decoration: none;
+}
+
+/* Image Responsiveness within Modal */
+.modal-content img {
+    max-width: 100%; /* Responsive image */
+    height: auto;
+    display: block;
+    margin: 10px auto; /* Center images if needed */
+}
+
+   
+/* Profile Modal Specific Styles */
+.profile-header {
+    display: flex;
+    justify-content: center; /* Keep the name centered */
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Profile Pic - Move to the left corner with gap */
+.profile-pic {
+    position: absolute;
+    left: 0; /* Aligns the profile pic to the left */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-left: 20px; /* Space from the left */
+    margin-right: 20px; /* Space between pic and name */
+}
+/* Address form and save button styles */
+#address-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+#address-form input {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.save-address-btn {
+    background-color: #C2915B;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-address-btn:hover {
+    background-color: #A57241;
+}
+
+/* Profile Name - Centered */
+.profile-name {
+    font-size: 24px;
+    text-align: center; /* Ensures the name is centered */
+    width: 100%; /* Forces the name to take full width for centering */
+    margin: 0; /* Removes any default margins */
+}
+
+/* Profile Role - Moved to the right */
+.profile-role {
+    position: absolute;
+    right: 20px; /* Move the role to the right side */
+    font-size: 16px;
+    color: #ccc;
+}
+
+/* Logout Button */
+.logout-btn {
+    background-color: #F5F5DC;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #333;
+    margin-top: 20px;
+}
+
+.logout-btn:hover {
+    background-color: #E0E0C0;
+}
+
+   
+  
+/* Video Background Section */
+.video-background {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden; /* Ensure content doesn't overflow the rounded corners */
+    border-radius: 0px; /* Add rounded corners to the container */
+}
+
+#background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    border-radius: 0px; /* Add rounded corners to the video itself */
+}
+   
+   /* Search container remains the same */
+   .search-container {
+       z-index: 1;
+       position: relative;
+       margin-top: 350px; /* Adjust this value to move it down */
+       left: -40px;
+   }
+   
+   .search-container input[type="text"] {
+       width: 300px;
+       padding: 10px;
+       border: none;
+       border-radius: 20px;
+       font-size: 16px;
+   }
+   
+   .search-container button {
+       padding: 10px 20px;
+       border: none;
+       border-radius: 20px;
+       background-color: #f5f5dc; /* Beige yellow */
+       color: #333;
+       font-size: 16px;
+       cursor: pointer;
+   }
+   
+   .search-container button:hover {
+       background-color: #e0e0c0; /* Slightly darker beige on hover */
+   }
+   
+   
+.about-section {
+    width: 80%;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+
+.section-title {
+    font-size: 36px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.about-item {
+    display: flex;
+    flex-direction: row; /* Set the direction to row for side-by-side layout */
+    align-items: center;
+    padding: 20px;
+    text-align: left;
+    gap: 20px; /* Gap between image and text */
+}
+
+.about-item:nth-child(even) {
+    flex-direction: row-reverse; /* Alternate the image position for even items */
+}
+
+.image-container {
+    flex: 0 0 40%; /* Image takes 40% of the width */
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.text-container {
+    flex: 1; /* Text takes the remaining 60% of the width */
+}
+
+.about-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #f9a825; /* Yellow color */
+}
+
+.about-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+   
+/* Main container holding map and sorting container */
+.map-carousel-container {
+    display: flex;
+    gap: 20px; /* Space between the elements */
+    margin-top: 20px;
+    align-items: flex-start; /* Align items to the top */
+}
+
+/* Map container */
+.map-container {
+    flex: 2; /* Map takes up more space */
+    height: 450px;
+    margin-bottom: 20px; /* Optional: adjust if needed */
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 10px; /* Rounded corners for the map */
+}
+
+/* Sidebar (holds sort and NGO list) */
+.sidebar {
+    flex: 1; /* Sidebar takes less space than map */
+}
+
+/* Sorting Container */
+.sort-container {
+    background-color: rgba(220, 193, 166, 0.9); /* Light brown background with slight transparency */
+    border: 1px solid rgba(139, 69, 19, 0.5); /* Darker brown subtle border */
+    border-radius: 15px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    color: #2e2e3e; /* Darker font color for readability */
+    flex-shrink: 0;
+}
+
+/* Label Styling */
+.sort-container label {
+    color: #3a3a4a; /* Slightly darker color for labels */
+    font-size: 18px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Custom Select Container */
+.custom-select {
+    position: relative;
+    display: block;
+}
+
+/* Select Box Styling */
+.custom-select select {
+    background-color: rgba(200, 180, 155, 0.9); /* Slightly darker brown */
+    color: #2e2e3e; /* Darker text color */
+    border: 1px solid rgba(139, 69, 19, 0.5); /* Matching border */
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    appearance: none;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Add Chevron Down Icon */
+.custom-select::after {
+    content: "\f078"; /* Font Awesome down arrow */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: rgba(46, 46, 62, 0.7); /* Darker chevron for visibility */
+}
+
+/* Dropdown Options Styling */
+.custom-select select option {
+    background-color: rgba(180, 160, 135, 0.9); /* Darker option background */
+    color: #2e2e3e; /* Dark text for options */
+}
+
+/* Hover Effect on Select Box */
+.custom-select select:hover {
+    background-color: rgba(180, 160, 135, 0.8); /* Slightly darker hover effect */
+}
+
+/* NGO List Container */
+.ngo-list {
+    background-color: rgba(220, 193, 166, 0.9); /* Same background as the sort container */
+    border-radius: 15px;
+    padding: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2);
+    color: #2e2e3e; /* Darker font color */
+}
+
+/* NGO Item */
+.ngo-item {
+    background-color: rgba(200, 180, 155, 0.9); /* Slightly darker brown */
+    border: 1px solid rgba(139, 69, 19, 0.5); /* Matching subtle border */
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* NGO Name */
+.ngo-name {
+    font-size: 16px;
+    color: #2e2e3e; /* Darker text for contrast */
+    font-weight: bold;
+}
+
+/* NGO Details */
+.ngo-details {
+    font-size: 12px;
+    color: #2e2e3e;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Individual Details Styling */
+.ngo-funding, .ngo-distance {
+    margin-top: 5px;
+}
+
+/* Hover Effect for NGO Item */
+.ngo-item:hover {
+    background-color: rgba(180, 160, 135, 0.8); /* Slightly darker hover effect */
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .map-carousel-container {
+        flex-direction: column; /* Stack vertically on smaller screens */
+    }
+    .map-container,
+    .sidebar {
+        width: 100%; /* Full width on small screens */
+    }
+    .ngo-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+   
+   /* Remaining carousel and modal styles unchanged */
+   .carousel .slick-list {
+       height: 100%;
+   }
+   
+   .slick-arrow {
+       z-index: 666;
+       background-color: rgba(0, 0, 0, 0.5);
+       border-radius: 50%;
+       color: #fff;
+       width: 30px;
+       height: 30px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       position: absolute;
+       left: 50%;
+       transform: translateX(-50%);
+   }
+   
+   .slick-prev {
+       top: -30px;
+   }
+   
+   .slick-next {
+       bottom: -30px;
+   }
+   
+
+   .heading {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+.subheading {
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+.section {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    margin-bottom: 60px;
+}
+.section div {
+    width: 30%;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.section div h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+.section div p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+}
+
+/* Adjusted button styles */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(220, 193, 166); /* Updated background color */
+    color: #333; /* Darker text color for contrast */
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.button:hover {
+    background-color: rgb(200, 180, 155); /* Darker shade on hover */
+}
+
+/* Social Media Icons */
+.social-icons {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    margin-left:1px;
+    gap: 5px;
+    background-color: transparent; /* No background */
+    border: none; /* No border */
+    box-shadow: none; /* No shadow */
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    background-color: rgb(220, 193, 166);
+    border-radius: 50%;
+    color: #333;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    width: 20px;
+    height: 20px;
+    border: none; /* No border */
+    box-shadow: none; /* No shadow */
+}
+
+/* Ensure the icons don't have their own background */
+.social-icon i {
+    background: none;
+    color: inherit;
+}
+
+.social-icon:hover {
+    background-color: rgb(200, 180, 155);
+    color: #000;
+}
+
+/* Responsive Styling */
+@media screen and (max-width: 768px) {
+    .section {
+        flex-direction: column;
+        align-items: center;
+    }
+    .section div {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+.footer {
+    background-color: #1c1c1c;
+    color: white;
+    padding: 20px;
+    width: 100%; /* Ensure footer spans full width */
+    box-sizing: border-box; /* Includes padding within the width */
+}
+
+.footer-top {
+    background-color: rgb(220, 193, 166); /* Updated background color */
+    text-align: center;
+    padding: 30px;
+    width: 100%; /* Ensure footer-top spans full width */
+    box-sizing: border-box;
+}
+
+.footer-top h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* Darker text color for contrast */
+}
+
+.donate-button {
+    background-color: #C2915B; /* Updated button background */
+    color: #333; /* Darker text color */
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-top: 15px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.donate-button:hover {
+    background-color: rgb(200, 180, 155); /* Darker shade on hover */
+}
+
+.footer-middle {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%; /* Ensure footer-middle spans full width */
+    box-sizing: border-box;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.footer-section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.subscribe-button,
+.volunteer-button,
+.influence-button {
+    background-color: rgb(220, 193, 166); /* Updated button background */
+    color: #333; /* Darker text color */
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.subscribe-button:hover,
+.volunteer-button:hover,
+.influence-button:hover {
+    background-color: rgb(200, 180, 155); /* Darker shade on hover */
+}
+
+/* Social Icons */
+.footer-social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.footer-social-icons a {
+    background-color: rgb(220, 193, 166); /* Updated icon background */
+    color: #333; /* Darker icon color */
+    padding: 10px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+}
+
+.footer-social-icons a:hover {
+    background-color: rgb(200, 180, 155); /* Darker shade on hover */
+    color: #000; /* Darker icon color on hover */
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    width: 100%; /* Ensure footer-bottom spans full width */
+    box-sizing: border-box;
+}
+</style>   
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a class="logo-tittle" href="#">
+                <img src="static/images/logo.png" alt="Logo"> <!-- Replace with your logo file -->
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" id="about-us-link" data-modal="about-us-modal">About Us</a></li>
+                <li><a href="#" id="profile-link" data-modal="profile-modal">Profile</a></li>
+                <li><a href="https://forms.gle/RKsbY3EcFnGy3DrF8" target="_blank" class="donate-btn">Donate</a></li>
+            
+        </div>
+    </header>
+    
+
+    <section class="video-background">
+        <video id="background-video" autoplay muted loop>
+            <source src="{{ url_for('static', filename='background-video.mp4') }}" type="video/mp4">
+        </video>
+        <div class="search-container">
+            <form id="search-form">
+                <input type="text" placeholder="Search for NGOs..." required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-section">
+        <h1 class="section-title">SEVASETU</h1>
+        <p class="section-subtitle">Empowering children in underserved communities to achieve their full potential through donations and support.</p>
+
+        <div class="about-content">
+            <!-- Section for the First Image and Text (Who We Are) -->
+            <div class="about-item">
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/about1.jpg') }}" alt="Image representing who we are">
+                </div>
+                <h2 class="about-title">WHO WE ARE</h2>
+                <p class="about-text">We are Sevasetu, an online platform dedicated to connecting generous individuals with NGOs that work to improve the lives of underprivileged children. We strive to create an easy, transparent, and meaningful way for people to contribute to causes like children's education, food costs, clothing, and even organizing joyful events like birthday parties.</p>
+            </div>
+
+            <!-- Section for the Second Image and Text (What We Do) -->
+            <div class="about-item">
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/about2.jpg') }}" alt="Image representing what we do">
+                </div>
+                <h2 class="about-title">WHAT WE DO</h2>
+                <p class="about-text">At Sevasetu, we enable users to find and donate to NGOs catering to various needs, including education, food, and essential supplies for children. Our platform also allows users to directly contact NGOs to organize special occasions such as birthday parties, bringing joy and creating memorable moments for children.</p>
+            </div>
+
+            <!-- Section for the Third Text (Why We Do It) -->
+            <div class="about-item">
+                <h2 class="about-title">WHY WE DO IT</h2>
+                <p class="about-text">We believe that every child deserves a chance at a better future, and by bridging the gap between donors and NGOs, we help create opportunities for children to thrive. Our mission is to support NGOs in their efforts to uplift underprivileged communities and to make giving easy, impactful, and personal for everyone involved.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-content container">
+        <div class="map-carousel-container">
+            <div class="map-container">
+                <iframe 
+                    src="https://device-track.onrender.com/"
+                    allow="geolocation"
+                    allowfullscreen=""
+                    loading="lazy">
+                </iframe>
+
+            </div>
+    
+            <div class="sidebar">
+                <!-- Sorting Container -->
+                <div class="sort-container">
+                    <label for="sort-options">Sort Items</label>
+                    <div class="custom-select">
+                        <select id="sort-options" onchange="sortNGOs()">
+                            <option value="least-funded">Least Funded</option>
+                            <option value="most-funded">Most Funded</option>
+                            <option value="nearest-ngo">Nearest NGO</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- NGO List Container -->
+                <div id="ngo-list" class="ngo-list"></div>
+            </div>
+            
+        </div>
+    </section>
+    
+    
+    <div class="container">
+        <h1 class="heading">GET INVOLVED</h1>
+        <p class="subheading">Please contact us to get involved and partner with us in fulfilling a child's dream, one child at a time.</p>
+
+        <div class="section">
+            <div>
+                <h2>MAKE A DONATION</h2>
+                <p>Your contributions to SevaSetu go directly to transforming lives. By donating, you can support children's education, provide meals, offer clothing, and contribute to raw materials for community projects. Additionally, you can make birthdays special for underprivileged children by organizing parties through our platform. Every donation makes a meaningful difference and helps us create a brighter, more inclusive future. Together, we can be the change. 100% of your donations are transparent and impactful. Let's shape a better tomorrow for these children.</p>
+                <li><a href="https://forms.gle/wSezQEPMUc8sEThZ6" target="_blank" class="button">Donate Now</a></li>
+            </div>
+            <div>
+                <h2>BE A PART OF SEVASETU TEAM</h2>
+                <p>SevaSetu thrives because of the passionate individuals who work behind the scenes. Join our dedicated team that handles everything from managing our website and supporting both users and NGOs, to expanding our social media presence. As part of SevaSetu, you'll help develop the platform, grow its reach, and ensure it continues to function seamlessly. Whether you're tech-savvy, a marketing genius, or simply someone passionate about making a difference, we'd love to have you on board.</p>
+                <a href="https://forms.gle/W2peiuFG6E9NKfyK7" target="_blank" class="button">JOIN THE TEAM</a>
+            </div>
+            <div>
+                <h2>DONATE YOUR INFLUENCE</h2>
+                <p>You don't always have to give money to make a big impact. By using your social media presence, you can help spread the word about SevaSetu and advocate for causes that matter. Every like, share, or post can make a child’s dream come true. Follow us on social media, engage with our content, and share how SevaSetu is working to uplift communities. Be the voice that brings awareness to the need for education, food, and care for children in need.</p>
+                <p><strong>#EmpowerWithSeva</strong></p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/sevasetu" class="social-icon" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/sevasetu_?utm_source=qr&igsh=MXM2ZjZsZGNlNGIzMQ==" class="social-icon" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/Sevasetufoundation" class="social-icon" target="_blank">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://twitter.com/sevasetu165191" class="social-icon" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+ 
+        <!-- Profile Popup Modal -->
+<div id="profile-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="profile-header">
+            <img src="static/images/default-dp.png" alt="Profile Picture" class="profile-pic">
+            <h2 class="profile-name">{{ user['first_name'] }} {{ user['last_name'] }}</h2>
+            <p class="profile-role">Donor</p>
+        </div>
+        <div class="profile-details">
+            <p><strong>Full Name:</strong> {{ user['first_name'] }} {{ user['last_name'] }}</p>
+            <p><strong>Email:</strong> {{ user['email'] }}</p>
+            
+            <!-- Display Address if present, otherwise show input field -->
+            {% if user['address'] %}
+                <p><strong>Address:</strong> {{ user['address'] }}</p>
+            {% else %}
+                <form id="address-form" action="/update_address" method="POST">
+                    <label for="address"><strong>Address:</strong></label>
+                    <input type="text" id="address" name="address" placeholder="Enter your address" required>
+                    <button type="submit" class="save-address-btn">Save Address</button>
+                </form>
+            {% endif %}
+
+            <p><strong>Donation Amount:</strong> ${{ user['donation_amount'] }}</p>
+            <p><strong>Password:</strong> ********</p> <!-- Hidden password -->
+        </div>
+        <form action="/logout" method="POST">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- About Us Popup Modal -->
+<div id="about-us-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>About Us</h2>
+        <p>Sevasetu is a dedicated NGO committed to making a difference in the lives of those in need...</p>
+    </div>
+</div>
+
+<!-- Contact Us Popup Modal -->
+<div id="contact-us-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Contact Us</h2>
+        <p><strong>Helpline Number:</strong> 8335021039</p>
+        <p><strong>Email:</strong> thesevasetufoundation@gmail.com</p>
+        <p><strong>Instagram ID:</strong> sevasetu_</p>
+    </div>
+</div>
+
+<!-- Search Results Modal -->
+<div id="search-results-modal" class="modal">
+    <div class="search-results-content">
+        <span class="close">&times;</span>
+        <div id="search-results"></div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="footer-top">
+        <h2>HELP BUILD A BETTER FUTURE FOR UNDERPRIVILEGED CHILDREN</h2>
+        <li><a href="https://forms.gle/wSezQEPMUc8sEThZ6" target="_blank" class="donate-button">Make a donation</a></li>
+    </div>
+    <div class="footer-section">
+        <h3>CONNECT WITH US</h3>
+        <p>Follow us on social media</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/sevasetu" class="social-icon" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/sevasetu_?utm_source=qr&igsh=MXM2ZjZsZGNlNGIzMQ==" class="social-icon" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/Sevasetufoundation" class="social-icon" target="_blank">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://twitter.com/sevasetu165191" class="social-icon" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+            
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>Copyright © 2024 SevaSetu. All rights reserved.</p>
+    </div>
+
+<!-- Include Slick Carousel JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+    function redirectToPage(action) {
+        // Redirect to /index route with the action parameter (login, signup, donate)
+        window.location.href = `/index?action=${action}`;
+    }
+    
+    
+    $(document).ready(function () {
+        // Initialize Slick Carousel for static carousels
+        $('.carousel').slick({
+            vertical: true,
+            prevArrow: '<button type="button" class="slick-prev">↑</button>',
+            nextArrow: '<button type="button" class="slick-next">↓</button>',
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            verticalSwiping: true
+        });
+    
+        // Open modals when navigation link is clicked
+        $('.nav-links li a').click(function (event) {
+            var isDonateLink = $(this).hasClass('donate-btn');
+            if (!isDonateLink) {
+                event.preventDefault();
+                var modalId = $(this).data('modal');
+                $('#' + modalId).css('display', 'block');
+            }
+        });
+        
+    
+        // Close modals when close button is clicked
+        $('.close').click(function () {
+            $(this).closest('.modal').css('display', 'none');
+        });
+    
+        // Close modals when clicking outside of modal content
+        $(window).click(function (event) {
+            if ($(event.target).hasClass('modal')) {
+                $(event.target).css('display', 'none');
+            }
+        });
+    
+        // Search functionality
+        $('#search-form').submit(function (event) {
+            event.preventDefault();
+            var query = $(this).find('input').val();
+                    fetch(`/search?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    $('#search-results').empty();
+                    if (data.length > 0) {
+                        data.forEach(ngo => {
+                            let imagesHtml = '';  // Carousel for images
+                            if (ngo.images && ngo.images.length > 0) {
+                                imagesHtml += '<div class="wrapper"><div class="search-images-carousel carousel-container carousel2">';
+                                ngo.images.forEach(imageUrl => {
+                                    imagesHtml += `<div><img src="${imageUrl}" alt="Image"></div>`;
+                                });
+                                imagesHtml += '</div>';
+                            }        
+                            $('#search-results').append(`
+                                <div class="search-result-item">
+                                    ${imagesHtml}
+                                    <div>
+                                        <h3>${ngo.name}</h3>
+                                        <p><strong>Address:</strong> ${ngo.address}</p>
+                                        <p><strong>Contact Number:</strong> ${ngo.contact_number}</p>
+                                        <p><strong>Children Supported:</strong> ${ngo.num_children}</p>
+                                        <p><strong>Cost of Food:</strong> ${ngo.food_cost}</p>
+                                        <p><strong>Description:</strong> ${ngo.description}</p>
+                                    </div>
+                                </div>
+                                </div> 
+                            `);
+                        });
+        
+                        // Initialize Slick Carousel for search results after content is added
+                        $('.carousel2').slick({
+                            speed: 5000,
+                            autoplay: true,
+                            autoplaySpeed: 0,
+                            centerMode: true,
+                            cssEase: 'linear',
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            variableWidth: true,
+                            infinite: true,
+                            initialSlide: 1,
+                            arrows: false,
+                            buttons: false
+                          },100);
+                          
+                    } else {
+                        $('#search-results').html("<p>No results found.</p>");
+                    }
+                    $('#search-results-modal').css('display', 'block');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    $('#search-results').html("<p>An error occurred while fetching results.</p>");
+                    $('#search-results-modal').css('display', 'block');
+                });
+        });
+    
+        // Close search results modal
+        $('#search-results-modal .close').click(function () {
+            $('#search-results-modal').css('display', 'none');
+        });
+    });
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            // Preventing default behavior of modal links only
+            if (link.dataset.modal) {
+                event.preventDefault(); // Only for modal links
+                // Modal opening code
+            }
+        });
+    });
+    // Function to fetch and display NGOs, with optional sorting
+function fetchNGOs(sortOption = null) {
+    const url = sortOption ? "/sort_ngos" : "/get_ngos";
+    const fetchOptions = sortOption
+        ? {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ sort_option: sortOption }),
+          }
+        : {
+              method: "GET",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+          };
+
+    fetch(url, fetchOptions)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            const ngoList = document.getElementById("ngo-list");
+            ngoList.innerHTML = ""; // Clear existing NGOs
+
+            if (data.length === 0) {
+                ngoList.innerHTML = "<div>No NGOs found.</div>";
+                return;
+            }
+
+            data.forEach((ngo) => {
+                // Assuming `ngo.name` is unique. If not, replace it with another unique identifier.
+                const ngoItem = `
+                    <div class="ngo-item" data-ngo-name="${ngo.name}">
+                        <div class="ngo-name">${ngo.name}</div>
+                        <div class="ngo-details">
+                            <div class="ngo-funding">Funding: ₹ ${ngo.funding}</div>
+                            ${
+                                ngo.distance
+                                    ? `<div class="ngo-distance">Distance: ${ngo.distance.toFixed(2)} km</div>`
+                                    : ""
+                            }
+                        </div>
+                    </div>
+                `;
+                ngoList.innerHTML += ngoItem;
+            });
+
+            // Attach click event to each NGO item
+            const ngoItems = document.querySelectorAll(".ngo-item");
+            ngoItems.forEach((item) => {
+                item.addEventListener("click", function () {
+                    const ngoName = this.getAttribute("data-ngo-name");
+                    if (ngoName) {
+                        showNGODetails(ngoName);
+                    } else {
+                        console.error("NGO Name is undefined");
+                    }
+                });
+            });
+        })
+        .catch((error) => {
+            console.error("Error fetching NGOs:", error);
+        });
+}
+
+// Fetch NGO details and populate modal
+function showNGODetails(ngoName) {
+    fetch(`/ngo_details/${encodeURIComponent(ngoName)}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(ngo => {
+        let imagesHtml = '';
+        if (ngo.images && ngo.images.length > 0) {
+            imagesHtml = `<div class="search-images-carousel carousel-container carousel2">`;
+            ngo.images.forEach(imageUrl => {
+                console.log(imageUrl);  // Check if image URLs are correct
+                imagesHtml += `<div><img src="${imageUrl}" alt="Image"></div>`;
+            });
+            imagesHtml += '</div>';
+        }
+
+        // Populate the modal with NGO details
+        $('#search-results').html(`
+            ${imagesHtml}
+            <div>
+                <h3>${ngo.name}</h3>
+                <p><strong>Address:</strong> ${ngo.address}</p>
+                <p><strong>Contact Number:</strong> ${ngo.contact_number}</p>
+                <p><strong>Children Supported:</strong> ${ngo.num_children}</p>
+                <p><strong>Cost of Food:</strong> ₹${ngo.food_cost}</p>
+                <p><strong>Description:</strong> ${ngo.description}</p>
+            </div>
+        `);
+
+        // Initialize the carousel (if images exist)
+        if (ngo.images && ngo.images.length > 0) {
+            setTimeout(() => {
+                $('.carousel2').slick({
+                    speed: 3000,
+                    autoplay: true,
+                    autoplaySpeed: 2000,
+                    centerMode: true,
+                    cssEase: 'linear',
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    variableWidth: true,
+                    infinite: true,
+                    arrows: false,
+                    buttons: false
+                });
+            }, 100); // Delay ensures that images are fully loaded into DOM
+        }
+
+        // Show the modal
+        $('#search-results-modal').css('display', 'block');
+    })
+    .catch(error => {
+        console.error('Error fetching NGO details:', error);
+        $('#search-results').html('<p>Error loading NGO details. Please try again later.</p>');
+        $('#search-results-modal').css('display', 'block');
+    });
+}
+
+
+// Event listener for sorting NGOs
+document.getElementById("sort-options").addEventListener("change", function () {
+    const sortOption = this.value;
+    fetchNGOs(sortOption);
+});
+
+// Close search results modal
+$("#search-results-modal .close").click(function () {
+    $("#search-results-modal").css("display", "none");
+});
+
+// Fetch NGOs initially without sorting
+fetchNGOs();
+
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        // Use latitude and longitude for map positioning
+    }, function(error) {
+        console.error("Error Code = " + error.code + " - " + error.message);
+    });
+} else {
+    console.error("Geolocation is not supported by this browser.");
+}  
+landmarks.forEach((landmark) => {
+    const marker = L.marker([landmark.latitude, landmark.longitude], { icon: redIcon })
+        .addTo(map)
+        .bindPopup(landmark.name)
+        .on("click", () => {
+            if (userMarker) {
+                // Check if a route is already present
+                if (currentRoute) {
+                    console.log("Removing current route");
+                    currentRoute.remove();
+                    currentRoute = null; // Reset to avoid errors
+                }
+
+                // Create a new route
+                currentRoute = L.Routing.control({
+                    waypoints: [
+                        L.latLng(userMarker.getLatLng()), 
+                        L.latLng(landmark.latitude, landmark.longitude)
+                    ],
+                    routeWhileDragging: true,
+                    createMarker: function() { return null; }
+                }).addTo(map);
+            }
+        });
+});
+
+</script>
+</body>
+</html>
