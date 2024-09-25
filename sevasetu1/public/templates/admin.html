@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/admin.css') }}">
+  <style>
+    .table-container {
+      display: none;
+      margin-top: 20px;
+    }
+    .search-panel {
+      display: none;
+      margin-top: 20px;
+    }
+    #addNgoForm {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-content">
+      <h1>Admin Dashboard</h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="toggle-btn-container">
+    <button id="customerTableBtn" class="toggle-btn" onclick="showCustomerTable()">Customer Table</button>
+    <button id="ngoTableBtn" class="toggle-btn" onclick="showNgoTable()">NGO Information Table</button>
+  </div>
+
+  <div class="search-panel" id="customerSearchPanel">
+    <input type="text" id="searchCustomerInput" onkeyup="searchCustomerTable()" placeholder="Search for customers..">
+  </div>
+
+  <div class="search-panel" id="ngoSearchPanel">
+    <input type="text" id="searchNgoInput" onkeyup="searchNgoTable()" placeholder="Search for NGO..">
+  </div>
+
+  <div class="table-container" id="customerTable">
+    <table id="userTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+          <th>Donation Amount (₹)</th>
+          <th>Increment Donation (₹)</th>
+          <th>Action</th>
+          <th>Send Email</th> <!-- New Column for sending emails -->
+        </tr>
+      </thead>
+      <tbody id="userTableBody">
+        <!-- Rows will be populated dynamically -->
+      </tbody>
+    </table>
+    <div class="pagination">
+      <span>1-10 of 97</span>
+      <div class="pagination-controls">
+        <button>&lt;</button>
+        <span>1/10</span>
+        <button>&gt;</button>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- NGO Table (Updated Section) -->
+  <div class="table-container" id="ngoTable">
+    <table id="ngoInfoTable">
+      <thead>
+        <tr>
+          <th>NGO Name</th>
+          <th>Location</th>
+          <th>Phone Number</th>
+          <th>Number of Children</th>
+          <th>Food Cost (₹)</th>
+          <th>Donation Amount (₹)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="ngoTableBody">
+        <!-- Rows will be populated dynamically -->
+      </tbody>
+    </table>
+    <div class="pagination">
+      <span>1-10 of 50</span>
+      <div class="pagination-controls">
+        <button>&lt;</button>
+        <span>1/10</span>
+        <button>&gt;</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='admin/admin.js') }}"></script>
+
+  <script>
+    function showCustomerTable() {
+      document.getElementById('customerTable').style.display = 'block';
+      document.getElementById('customerSearchPanel').style.display = 'block';
+      document.getElementById('ngoTable').style.display = 'none';
+      document.getElementById('ngoSearchPanel').style.display = 'none';
+    }
+
+    function showNgoTable() {
+      document.getElementById('ngoTable').style.display = 'block';
+      document.getElementById('ngoSearchPanel').style.display = 'block';
+      document.getElementById('customerTable').style.display = 'none';
+      document.getElementById('customerSearchPanel').style.display = 'none';
+    }
+
+    function logout() {
+      fetch('/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = '/';
+        }
+      })
+      .catch(error => console.error('Error during logout:', error));
+    }
+
+    // Fetch and display user data
+    fetch('/get_users')
+      .then(response => response.json())
+      .then(data => {
+        const userTableBody = document.getElementById('userTableBody');
+        userTableBody.innerHTML = '';
+
+        data.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.first_name} ${user.last_name}</td>
+            <td>${user.phone_number}</td>
+            <td>${user.email}</td>
+            <td>₹${user.donation_amount || 0}</td>
+            <td><input type="number" id="increment-${user.email}" placeholder="₹"></td>
+            <td><button onclick="incrementDonation('${user.email}')">Update</button></td>
+          `;
+          userTableBody.appendChild(row);
+        });
+      });
+
+    function incrementDonation(email) {
+      const incrementValue = document.getElementById(`increment-${email}`).value;
+
+      if (incrementValue && incrementValue > 0) {
+        fetch('/increment_donation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: email, amount: parseInt(incrementValue) })
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert(data.message);
+          location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+      } else {
+        alert('Please enter a valid amount to increment.');
+      }
+    }
+
+    // Fetch and display NGO data
+    fetch('/get_ngos')
+      .then(response => response.json())
+      .then(data => {
+        const ngoTableBody = document.getElementById('ngoTableBody');
+        ngoTableBody.innerHTML = '';
+
+        data.forEach(ngo => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${ngo.name}</td>
+            <td>${ngo.address}</td>
+            <td>${ngo.contact_number}</td>
+            <td><input type="number" id="numChildren-${ngo.name}" value="${ngo.num_children || 0}"></td>
+            <td><input type="number" id="foodCost-${ngo.name}" value="${ngo.food_cost || 0}"></td>
+            <td><input type="number" id="donationAmount-${ngo.name}" value="${ngo.donation_amount || 0}"></td>
+            <td><button onclick="updateNgo('${ngo.name}')">Update</button></td>
+          `;
+          ngoTableBody.appendChild(row);
+        });
+      });
+
+    function updateNgo(ngoName) {
+      const numChildren = document.getElementById(`numChildren-${ngoName}`).value;
+      const foodCost = document.getElementById(`foodCost-${ngoName}`).value;
+      const donationAmount = document.getElementById(`donationAmount-${ngoName}`).value;
+
+      if (numChildren && foodCost && donationAmount) {
+        fetch('/update_ngo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: ngoName,
+            num_children: parseInt(numChildren),
+            food_cost: parseInt(foodCost),
+            donation_amount: parseInt(donationAmount)
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert(data.message);
+          location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+      } else {
+        alert('Please enter valid values.');
+      }
+    }
+// Adding "Send Email" column functionality for each user row
+fetch('/get_users')
+  .then(response => response.json())
+  .then(data => {
+    const userTableBody = document.getElementById('userTableBody');
+    userTableBody.innerHTML = '';
+
+    data.forEach(user => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${user.first_name} ${user.last_name}</td>
+        <td>${user.phone_number}</td>
+        <td>${user.email}</td>
+        <td>₹${user.donation_amount || 0}</td>
+        <td><input type="number" id="increment-${user.email}" placeholder="₹"></td>
+        <td><button onclick="incrementDonation('${user.email}')">Update</button></td>
+        <td><button onclick="sendThankYouEmail('${user.email}', '${user.first_name}')">Send Email</button></td> <!-- Button to trigger email -->
+      `;
+      userTableBody.appendChild(row);
+    });
+  });
+
+// Function to send the email
+function sendThankYouEmail(email, firstName) {
+  fetch('/send_email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: email,
+      first_name: firstName
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.message);
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+  </script>
+
+</body>
+</html>

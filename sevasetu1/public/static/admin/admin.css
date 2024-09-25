@@ -1,0 +1,130 @@
+
+/* General Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+  background-color: black;
+  color: white;
+  padding: 0.5rem 1rem; /* Reduced padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px; /* Fixed height */
+}
+
+/* Adjusted content and button styling for positioning */
+.navbar-content {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* Takes remaining space */
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 1.5rem; /* Adjusted font size */
+}
+
+/* Move the logout button to the right corner */
+.logout-btn {
+  background-color: #ff4b4b;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.8rem; /* Adjusted padding */
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: auto; /* Push button to the right */
+}
+
+
+/* Toggle Buttons for Table Views */
+.toggle-btn-container {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.toggle-btn {
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 0 0.5rem;
+}
+
+/* Search Panel */
+.search-panel {
+  margin: 1rem;
+  text-align: center;
+}
+
+.search-panel input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 50%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Table Styling */
+.table-container {
+  margin: 1rem auto;
+  width: 90%;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+thead {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+thead th {
+  padding: 1rem;
+}
+
+tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+tbody td {
+  padding: 1rem;
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.pagination-controls button {
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
