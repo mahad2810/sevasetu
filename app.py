@@ -7,16 +7,21 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from geopy.distance import geodesic  # To calculate distances between two locations
 from geopy.geocoders import Nominatim  # To get coordinates from address
+import ssl
+
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
 
 # MongoDB connection setup for PyMongo
-app.config["MONGO_URI"] =  "mongodb+srv://thesevasetufoundation:QDBxMA83Wsiamvyb@sevasetu.qplys.mongodb.net/userDB?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true"
+app.config["MONGO_URI"] = "mongodb+srv://thesevasetufoundation:QDBxMA83Wsiamvyb@sevasetu.qplys.mongodb.net/userDB?retryWrites=true&w=majority&tls=true"
+
+# Initialize PyMongo
 mongo = PyMongo(app)
 
 # Additional MongoClient connection for direct access to NGO collection
-client = MongoClient('mongodb+srv://thesevasetufoundation:QDBxMA83Wsiamvyb@sevasetu.qplys.mongodb.net/userDB?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true')
+# Use the already defined MONGO_URI from app.config
+client = MongoClient(app.config["MONGO_URI"])
 db = client.userDB
 ngo_collection = db.ngos
 
