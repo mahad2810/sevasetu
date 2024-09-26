@@ -38,7 +38,7 @@
        width: 100%;
        z-index: 2;
        padding: 10px 0;
-       background-color: rgba(220, 193, 166, 0.8); /* Slightly transparent navbar */
+       background-color: rgba(220, 193, 166, 1); /* Slightly transparent navbar */
        backdrop-filter: blur(5px); /* Optional: Adds a blur effect to the navbar */
        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */
    }
@@ -163,7 +163,34 @@
     color: #ccc;
     text-decoration: none;
 }
+/* Split Modal Content */
+.modal-split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
+/* Each Half */
+.modal-half {
+    width: 48%;
+    padding: 10px;
+}
+
+/* Members Section */
+.member {
+    margin-bottom: 20px;
+}
+
+.member p {
+    font-weight: bold;
+}
+
+.member-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 /* Image Responsiveness within Modal */
 .modal-content img {
     max-width: 100%; /* Responsive image */
@@ -779,6 +806,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#" id="about-us-link" data-modal="about-us-modal">About Us</a></li>
+                <li><a href="#" id="contact-us-link" data-modal="contact-us-modal">Contact Us</a></li>
                 <li><a href="#" onclick="redirectToPage('login')">Login</a></li>
                 <li><a href="#" onclick="redirectToPage('donate')" class="donate-btn">Donate</a></li>
             </ul>
@@ -902,11 +930,43 @@
         </div>
  
 <!-- About Us Popup Modal -->
+<!-- Modal Structure -->
 <div id="about-us-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>About Us</h2>
-        <p>Sevasetu is a dedicated NGO committed to making a difference in the lives of those in need...</p>
+        
+        <!-- Two halves layout inside modal -->
+        <div class="modal-split">
+            
+            <!-- Our Story Section (Left Half) -->
+            <div class="modal-half" id="our-story-section">
+                <h3>Our Story</h3>
+                <p>Stay tuned...</p>
+            </div>
+            
+            <!-- Members Section (Right Half) -->
+            <div class="modal-half" id="our-members-section">
+                <h3>Our Members</h3>
+                <div class="member">
+                    <p>Member 1: Mahad Iqbal</p>
+                    <img src="/static/images/mahad.jpg" alt="Mahad Iqbal" class="member-image">
+                </div>
+                <div class="member">
+                    <p>Member 2: Saptadeep Mitra</p>
+                    <img src="/static/images/saptadeep.jpg" alt="Saptadeep Mitra" class="member-image">
+                </div>
+                <div class="member">
+                    <p>Member 3: Rahul Kumar</p>
+                    <img src="/static/images/rahul.jpg" alt="Rahul Kumar" class="member-image">
+                </div>
+                <div class="member">
+                    <p>Member 4: Subrodeep Majumdar</p>
+                    <img src="/static/images/subrodeep.jpg" alt="Subrodeep Majumdar" class="member-image">
+                </div>
+            </div>
+            
+        </div>
     </div>
 </div>
 
@@ -1112,8 +1172,8 @@ function fetchNGOs(sortOption = null) {
                 return;
             }
 
+            // Display NGOs in the list
             data.forEach((ngo) => {
-                // Assuming `ngo.name` is unique. If not, replace it with another unique identifier.
                 const ngoItem = `
                     <div class="ngo-item" data-ngo-name="${ngo.name}">
                         <div class="ngo-name">${ngo.name}</div>
@@ -1130,13 +1190,13 @@ function fetchNGOs(sortOption = null) {
                 ngoList.innerHTML += ngoItem;
             });
 
-            // Attach click event to each NGO item
+            // Attach click event to each NGO item to open the details modal
             const ngoItems = document.querySelectorAll(".ngo-item");
             ngoItems.forEach((item) => {
                 item.addEventListener("click", function () {
                     const ngoName = this.getAttribute("data-ngo-name");
                     if (ngoName) {
-                        showNGODetails(ngoName);
+                        showNGODetails(ngoName);  // Show NGO details in the modal
                     } else {
                         console.error("NGO Name is undefined");
                     }
@@ -1148,102 +1208,79 @@ function fetchNGOs(sortOption = null) {
         });
 }
 
-// Fetch NGO details and populate modal
 function showNGODetails(ngoName) {
     fetch(`/ngo_details/${encodeURIComponent(ngoName)}`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(ngo => {
-        // Clear previous content
-        $('#search-results').html('');
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(ngo => {
+            console.log(ngo); // Log the NGO object for debugging
 
-        // Check if images exist and create the image carousel HTML
-        let imagesHtml = '';
-        if (ngo.images && ngo.images.length > 0) {
-            imagesHtml = `<div class="search-images-carousel carousel-container carousel2">`;
-            ngo.images.forEach(imageUrl => {
-                console.log(imageUrl);  // Check if image URLs are correct
-                imagesHtml += `
+            let imagesHtml = '';  // Carousel for images
+            if (ngo.images && ngo.images.length > 0) {
+                imagesHtml += '<div class="wrapper"><div class="search-images-carousel carousel-container carousel2">';
+                ngo.images.forEach(imageUrl => {
+                    // Construct the full URL by prepending '/static/' to the image path
+                    imagesHtml += `<div><img src="/${imageUrl}" alt="Image"></div>`;
+                });
+                imagesHtml += '</div></div>';
+            } else {
+                imagesHtml = '<p>No images available</p>'; // This will show if the images array is empty
+            }
+
+            // Append NGO details to modal content
+            $('#search-results').html(`
+                <div class="search-result-item">
+                    ${imagesHtml}
                     <div>
-                        <img src="${imageUrl}" alt="NGO Image" onerror="this.src='fallback-image.jpg'" />
+                        <h3>${ngo.name}</h3>
+                        <p><strong>Address:</strong> ${ngo.address}</p>
+                        <p><strong>Contact Number:</strong> ${ngo.contact_number}</p>
+                        <p><strong>Children Supported:</strong> ${ngo.num_children}</p>
+                        <p><strong>Cost of Food:</strong> ₹${ngo.food_cost}</p>
+                        <p><strong>Description:</strong> ${ngo.description}</p>
                     </div>
-                `;
-            });
-            imagesHtml += '</div>';
-        } else {
-            console.log('No images available for this NGO.');
-        }
+                </div>
+            `);
+            
+            // Initialize Slick Carousel for images
+            if (ngo.images && ngo.images.length > 0) {
+                $('.carousel2').slick({
+                    speed: 5000,
+                    autoplay: true,
+                    autoplaySpeed: 0,
+                    centerMode: true,
+                    cssEase: 'linear',
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    variableWidth: true,
+                    infinite: true,
+                    arrows: false,
+                    buttons: false
+                });
+            }
 
-        // Populate the modal with NGO details and images
-        $('#search-results').html(`
-            ${imagesHtml}
-            <div>
-                <h3>${ngo.name}</h3>
-                <p><strong>Address:</strong> ${ngo.address}</p>
-                <p><strong>Contact Number:</strong> ${ngo.contact_number}</p>
-                <p><strong>Children Supported:</strong> ${ngo.num_children}</p>
-                <p><strong>Cost of Food:</strong> ₹${ngo.food_cost}</p>
-                <p><strong>Description:</strong> ${ngo.description}</p>
-            </div>
-        `);
-
-        // Initialize the carousel if there are images
-        if (ngo.images && ngo.images.length > 0) {
-            setTimeout(() => {
-                initializeCarousel(); // Moved carousel initialization to a separate function
-            }, 100); // Slight delay ensures that the DOM is ready
-        }
-
-        // Display the modal
-        $('#search-results-modal').css('display', 'block');
-    })
-    .catch(error => {
-        console.error('Error fetching NGO details:', error);
-        $('#search-results').html('<p>Error loading NGO details. Please try again later.</p>');
-        $('#search-results-modal').css('display', 'block');
-    });
-}
-
-// Carousel initialization function
-function initializeCarousel() {
-    if ($('.carousel2').length > 0) {
-        $('.carousel2').slick({
-            speed: 3000,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            centerMode: true,
-            cssEase: 'linear',
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            variableWidth: true,
-            infinite: true,
-            arrows: false,
-            buttons: false
+            // Display the modal with NGO details
+            $('#search-results-modal').css('display', 'block');
+        })
+        .catch(error => {
+            console.error('Error fetching NGO details:', error);
+            $('#search-results').html("<p>An error occurred while fetching results.</p>");
+            $('#search-results-modal').css('display', 'block');
         });
-    } else {
-        console.error('Carousel element not found');
-    }
 }
 
-// Event listener for sorting NGOs
-document.getElementById("sort-options").addEventListener("change", function () {
-    const sortOption = this.value;
-    fetchNGOs(sortOption);
-});
 
 // Close search results modal
-$("#search-results-modal .close").click(function () {
-    $("#search-results-modal").css("display", "none");
+$('#search-results-modal .close').click(function () {
+    $('#search-results-modal').css('display', 'none');
 });
 
 // Fetch NGOs initially without sorting
 fetchNGOs();
-
-
 
 // Event listener for sorting NGOs
 document.getElementById("sort-options").addEventListener("change", function () {
@@ -1251,13 +1288,6 @@ document.getElementById("sort-options").addEventListener("change", function () {
     fetchNGOs(sortOption);
 });
 
-// Close search results modal
-$("#search-results-modal .close").click(function () {
-    $("#search-results-modal").css("display", "none");
-});
-
-// Fetch NGOs initially without sorting
-fetchNGOs();
 
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {

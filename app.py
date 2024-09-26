@@ -244,6 +244,7 @@ def ngo_details(ngo_name):
         return jsonify(ngo)
     else:
         return jsonify({'error': 'NGO not found'}), 404
+    
 
 @app.route('/update_ngo', methods=['POST'])
 def update_ngo():

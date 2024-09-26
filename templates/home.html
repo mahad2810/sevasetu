@@ -35,8 +35,8 @@
    header {
        position: sticky;
        top: 0;
-       background-color: rgba(220, 193, 166, 0.8); /* Light brown with slight transparency */
-       padding: 10px 0;
+       background-color: rgba(220, 193, 166, 1); /* Light brown with slight transparency */
+       padding: 5px 0; /* Reduced padding for height adjustment */
        z-index: 1000;
        border-radius: 0; /* Remove rounded corners, making the edges straight */
        backdrop-filter: blur(5px); /* Adds a blur effect for the transparency */
@@ -44,20 +44,12 @@
    
    /* Logo and Title Styles */
    .logo-tittle img {
-    height: 60px;
-    padding:0;
-    width: 60px;
-    margin-left: 50px;
-    margin-right: 10px;
-    position: relative;
-    top: 10px; /* Reset logo position */
-}
-   
-   .site-title {
-       color: #fff; /* Keep the font color white */
-       font-size: 20px;
+       height: 40px; /* Reduced height */
+       width: 40px; /* Reduced width */
+       margin-left: 40px; /* Adjust margin for alignment */
+       margin-right: 10px;
        position: relative;
-       top: 20px; /* Move the title downwards */
+       top: 10px; /* Adjust positioning */
    }
    
    /* Navigation Links */
@@ -66,7 +58,7 @@
        display: flex;
        justify-content: flex-end;
        align-items: center;
-       gap: 15px;
+       gap: 10px; /* Reduced gap between links */
    }
    
    .nav-links li a {
@@ -74,14 +66,27 @@
        color: #000; /* Change link color to black for contrast */
        font-weight: bold;
        position: relative;
-       top: -5px;
+       top: -2px; /* Slightly reduced position */
        background-color: rgba(255, 255, 255, 0.7); /* Light transparent background */
-       padding: 10px 20px;
-       border-radius: 60px; /* Rounded corners */
+       padding: 5px 15px; /* Reduced padding for more compact links */
+       border-radius: 30px; /* Reduced border-radius */
    }
    
    .nav-links li a:hover {
        background-color: rgba(255, 255, 255, 0.9); /* Slightly darker on hover */
+   }
+   /* Donate Button Styles */
+   .nav-links li .donate-btn {
+       background-color: #C2915B; /* Complementary color for the Donate button */
+       color: #fff; /* White text */
+       padding: 10px 20px;
+       border-radius: 60px; /* Rounded corners */
+       font-weight: bold;
+       text-decoration: none;
+   }
+   
+   .nav-links li .donate-btn:hover {
+       background-color: #A57241; /* Darker shade on hover */
    }
    
    
@@ -120,12 +125,21 @@
     padding: 20px;
     border-radius: 10px;
     color: #fff; /* Text color */
-    width: 70%; /* Further reduce the width of the modal */
-    max-width: 500px; /* Decrease the maximum width */
+    width: 90%; /* Further reduce the width of the modal */
+    max-width: 1200px; /* Decrease the maximum width */
     margin: 0 auto; /* Center the modal */
     border: 2px solid rgba(220, 193, 166, 1); /* Border with a matching color, but fully opaque */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
+/* Carousel Images - Fixed Height */
+.carousel2 img {
+    height: 200px; /* Set a fixed height for all images */
+    width: auto; /* Maintain aspect ratio by letting width adjust automatically */
+    object-fit: cover; /* Ensures images fill the container while keeping the aspect ratio */
+}
+
+/* Optionally, you can adjust the height here as needed. */
+
 
 /* Close Button */
 .close {
@@ -145,7 +159,34 @@
     color: #ccc;
     text-decoration: none;
 }
+/* Split Modal Content */
+.modal-split {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
+/* Each Half */
+.modal-half {
+    width: 48%;
+    padding: 10px;
+}
+
+/* Members Section */
+.member {
+    margin-bottom: 20px;
+}
+
+.member p {
+    font-weight: bold;
+}
+
+.member-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 /* Image Responsiveness within Modal */
 .modal-content img {
     max-width: 100%; /* Responsive image */
@@ -170,6 +211,7 @@
     left: 0; /* Aligns the profile pic to the left */
     width: 80px;
     height: 80px;
+    padding:5px;
     border-radius: 50%;
     margin-left: 20px; /* Space from the left */
     margin-right: 20px; /* Space between pic and name */
@@ -762,6 +804,7 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#" id="about-us-link" data-modal="about-us-modal">About Us</a></li>
+                <li><a href="#" id="contact-us-link" data-modal="contact-us-modal">Contact Us</a></li>
                 <li><a href="#" id="profile-link" data-modal="profile-modal">Profile</a></li>
                 <li><a href="https://forms.gle/RKsbY3EcFnGy3DrF8" target="_blank" class="donate-btn">Donate</a></li>
             
@@ -916,13 +959,44 @@
     </div>
 </div>
 
-
 <!-- About Us Popup Modal -->
+<!-- Modal Structure -->
 <div id="about-us-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>About Us</h2>
-        <p>Sevasetu is a dedicated NGO committed to making a difference in the lives of those in need...</p>
+        
+        <!-- Two halves layout inside modal -->
+        <div class="modal-split">
+            
+            <!-- Our Story Section (Left Half) -->
+            <div class="modal-half" id="our-story-section">
+                <h3>Our Story</h3>
+                <p>Stay tuned...</p>
+            </div>
+            
+            <!-- Members Section (Right Half) -->
+<div class="modal-half" id="our-members-section">
+    <h3>Our Members</h3>
+    <div class="member">
+        <p>Member 1: Mahad Iqbal</p>
+        <img src="/static/images/mahad.jpg" alt="Mahad Iqbal" class="member-image">
+    </div>
+    <div class="member">
+        <p>Member 2: Saptadeep Mitra</p>
+        <img src="/static/images/saptadeep.jpg" alt="Saptadeep Mitra" class="member-image">
+    </div>
+    <div class="member">
+        <p>Member 3: Rahul Kumar</p>
+        <img src="/static/images/rahul.jpg" alt="Rahul Kumar" class="member-image">
+    </div>
+    <div class="member">
+        <p>Member 4: Subrodeep Majumdar</p>
+        <img src="/static/images/subrodeep.jpg" alt="Subrodeep Majumdar" class="member-image">
+    </div>
+</div>
+
+        </div>
     </div>
 </div>
 
@@ -1094,7 +1168,7 @@
             }
         });
     });
-    // Function to fetch and display NGOs, with optional sorting
+     // Function to fetch and display NGOs, with optional sorting
 function fetchNGOs(sortOption = null) {
     const url = sortOption ? "/sort_ngos" : "/get_ngos";
     const fetchOptions = sortOption
@@ -1128,8 +1202,8 @@ function fetchNGOs(sortOption = null) {
                 return;
             }
 
+            // Display NGOs in the list
             data.forEach((ngo) => {
-                // Assuming `ngo.name` is unique. If not, replace it with another unique identifier.
                 const ngoItem = `
                     <div class="ngo-item" data-ngo-name="${ngo.name}">
                         <div class="ngo-name">${ngo.name}</div>
@@ -1146,13 +1220,13 @@ function fetchNGOs(sortOption = null) {
                 ngoList.innerHTML += ngoItem;
             });
 
-            // Attach click event to each NGO item
+            // Attach click event to each NGO item to open the details modal
             const ngoItems = document.querySelectorAll(".ngo-item");
             ngoItems.forEach((item) => {
                 item.addEventListener("click", function () {
                     const ngoName = this.getAttribute("data-ngo-name");
                     if (ngoName) {
-                        showNGODetails(ngoName);
+                        showNGODetails(ngoName);  // Show NGO details in the modal
                     } else {
                         console.error("NGO Name is undefined");
                     }
@@ -1164,68 +1238,80 @@ function fetchNGOs(sortOption = null) {
         });
 }
 
-// Fetch NGO details and populate modal
 function showNGODetails(ngoName) {
     fetch(`/ngo_details/${encodeURIComponent(ngoName)}`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(ngo => {
-        let imagesHtml = '';
-        if (ngo.images && ngo.images.length > 0) {
-            imagesHtml = `<div class="search-images-carousel carousel-container carousel2">`;
-            ngo.images.forEach(imageUrl => {
-                console.log(imageUrl);  // Check if image URLs are correct
-                imagesHtml += `<div><img src="${imageUrl}" alt="Image"></div>`;
-            });
-            imagesHtml += '</div>';
-        }
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(ngo => {
+            console.log(ngo); // Log the NGO object for debugging
 
-        // Populate the modal with NGO details
-        $('#search-results').html(`
-            ${imagesHtml}
-            <div>
-                <h3>${ngo.name}</h3>
-                <p><strong>Address:</strong> ${ngo.address}</p>
-                <p><strong>Contact Number:</strong> ${ngo.contact_number}</p>
-                <p><strong>Children Supported:</strong> ${ngo.num_children}</p>
-                <p><strong>Cost of Food:</strong> ₹${ngo.food_cost}</p>
-                <p><strong>Description:</strong> ${ngo.description}</p>
-            </div>
-        `);
+            let imagesHtml = '';  // Carousel for images
+            if (ngo.images && ngo.images.length > 0) {
+                imagesHtml += '<div class="search-images-carousel carousel2">';  // Simplified the wrapper
+                ngo.images.forEach(imageUrl => {
+                    // Construct the full URL by prepending '/static/images/' to the image path
+                    imagesHtml += `<div><img src="/static/images/${imageUrl}" alt="${ngo.name}"></div>`;
+                });
+                imagesHtml += '</div>';
+            } else {
+                imagesHtml = '<p>No images available</p>'; // Fallback if no images are present
+            }
 
-        // Initialize the carousel (if images exist)
-        if (ngo.images && ngo.images.length > 0) {
-            setTimeout(() => {
+            // Append NGO details to modal content
+            $('#search-results').html(`
+                <div class="search-result-item">
+                    ${imagesHtml}
+                    <div>
+                        <h3>${ngo.name}</h3>
+                        <p><strong>Address:</strong> ${ngo.address}</p>
+                        <p><strong>Contact Number:</strong> ${ngo.contact_number}</p>
+                        <p><strong>Children Supported:</strong> ${ngo.num_children}</p>
+                        <p><strong>Cost of Food:</strong> ₹${ngo.food_cost}</p>
+                        <p><strong>Description:</strong> ${ngo.description}</p>
+                    </div>
+                </div>
+            `);
+            
+            // Initialize Slick Carousel for images
+            if (ngo.images && ngo.images.length > 0) {
                 $('.carousel2').slick({
-                    speed: 3000,
+                    speed: 5000,
                     autoplay: true,
-                    autoplaySpeed: 2000,
+                    autoplaySpeed: 3000,  // Adjust the autoplay speed for better viewing
                     centerMode: true,
                     cssEase: 'linear',
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     variableWidth: true,
                     infinite: true,
-                    arrows: false,
+                    arrows: true,  // Set to true to allow manual navigation
                     buttons: false
                 });
-            }, 100); // Delay ensures that images are fully loaded into DOM
-        }
+            }
 
-        // Show the modal
-        $('#search-results-modal').css('display', 'block');
-    })
-    .catch(error => {
-        console.error('Error fetching NGO details:', error);
-        $('#search-results').html('<p>Error loading NGO details. Please try again later.</p>');
-        $('#search-results-modal').css('display', 'block');
-    });
+            // Display the modal with NGO details
+            $('#search-results-modal').css('display', 'block');
+        })
+        .catch(error => {
+            console.error('Error fetching NGO details:', error);
+            $('#search-results').html("<p>An error occurred while fetching results.</p>");
+            $('#search-results-modal').css('display', 'block');
+        });
 }
 
+
+
+// Close search results modal
+$('#search-results-modal .close').click(function () {
+    $('#search-results-modal').css('display', 'none');
+});
+
+// Fetch NGOs initially without sorting
+fetchNGOs();
 
 // Event listener for sorting NGOs
 document.getElementById("sort-options").addEventListener("change", function () {
@@ -1233,13 +1319,6 @@ document.getElementById("sort-options").addEventListener("change", function () {
     fetchNGOs(sortOption);
 });
 
-// Close search results modal
-$("#search-results-modal .close").click(function () {
-    $("#search-results-modal").css("display", "none");
-});
-
-// Fetch NGOs initially without sorting
-fetchNGOs();
 
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
