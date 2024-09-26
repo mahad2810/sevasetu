@@ -15,89 +15,36 @@
 
 <!-- Inline CSS -->
 <style>
-    /* For mobile devices (portrait and landscape) */
-    @media only screen and (max-width: 600px) {
-      body {
-        font-size: 14px;
+    .container {
+        width: 100%; /* Fluid width */
         padding: 10px;
-      }
-    
-      .container {
-        width: 100%;
-        padding: 5px;
-      }
-    
-      .navbar {
-        font-size: 16px;
-      }
-    
-      /* Adjust images */
-      img {
-        width: 100%;
-        height: auto;
-      }
-    }
-    
-    /* For tablets and small desktops */
-    @media only screen and (min-width: 601px) and (max-width: 1024px) {
-      body {
-        font-size: 16px;
-      }
-    
-      .container {
-        width: 90%;
-      }
-    
-      .navbar {
-        font-size: 18px;
-      }
-    }
-    
-    /* For laptops and desktops */
-    @media only screen and (min-width: 1025px) {
-      body {
-        font-size: 18px;
-      }
-    
-      .container {
-        width: 80%;
-      }
-    
-      .navbar {
-        font-size: 20px;
-      }
-    }
-    .flex-container {
-        display: flex;
-        flex-direction: column;
+        margin: 0 auto; /* Center the content */
       }
       
-      @media only screen and (min-width: 768px) {
-        .flex-container {
-          flex-direction: row;
+      @media only screen and (min-width: 601px) and (max-width: 1024px) {
+        .container {
+          width: 90%;
         }
       }
-      .container {
-        width: 100%; /* Instead of a fixed width like 1200px */
-        padding: 10px;
+      
+      @media only screen and (min-width: 1025px) {
+        .container {
+          width: 80%;
+        }
       }
-   /* General Styles */
-   * {
-       margin: 0;
-       padding: 0;
-       box-sizing: border-box;
-   }
-   
-   body {
-       font-family: Arial, sans-serif;
-       line-height: 1.6;
-   }
-   
-   .container {
-       width: 100%;
-       margin: 0 auto;
-   }
-   
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: rgba(220, 193, 166, 0.8); /* Match your navbar color */
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+                  
    /* Sticky Navbar */
    header {
        position: sticky;
