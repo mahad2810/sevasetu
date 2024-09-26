@@ -16,7 +16,7 @@ app.config["MONGO_URI"] =  "mongodb+srv://thesevasetufoundation:QDBxMA83Wsiamvyb
 mongo = PyMongo(app)
 
 # Additional MongoClient connection for direct access to NGO collection
-client = MongoClient('mongodb+srv://thesevasetufoundation:QDBxMA83Wsiamvyb@sevasetu.qplys.mongodb.net/?retryWrites=true&w=majority&appName=Sevasetu')
+client = MongoClient('mongodb+srv://thesevasetufoundation:QDBxMA83Wsiamvyb@sevasetu.qplys.mongodb.net/userDB?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true')
 db = client.userDB
 ngo_collection = db.ngos
 
