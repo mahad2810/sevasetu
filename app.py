@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
 
 # MongoDB connection setup for PyMongo
-app.config["MONGO_URI"] = "mongodb+srv://thesevasetufoundation:QDBxMA83Wsiamvyb@sevasetu.qplys.mongodb.net/userDB?retryWrites=true&w=majority&appName=Sevasetu"
+app.config["MONGO_URI"] =  "mongodb+srv://thesevasetufoundation:QDBxMA83Wsiamvyb@sevasetu.qplys.mongodb.net/userDB?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true"
 mongo = PyMongo(app)
 
 # Additional MongoClient connection for direct access to NGO collection

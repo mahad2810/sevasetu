@@ -138,6 +138,11 @@
     padding: 20px;
     border-radius: 10px;
     color: #fff; /* Text color */
+    width: 90%; /* Further reduce the width of the modal */
+    max-width: 900px; /* Decrease the maximum width */
+    margin: 0 auto; /* Center the modal */
+    border: 2px solid rgba(220, 193, 166, 1); /* Border with a matching color, but fully opaque */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 /* Close Button */
@@ -168,44 +173,85 @@
 }
 
    
-   /* Profile Modal Specific Styles */
-   .profile-header {
-       display: flex;
-       justify-content: space-between;
-       align-items: center;
-       margin-bottom: 20px;
-   }
-   
-   .profile-pic {
-       width: 80px;
-       height: 80px;
-       border-radius: 50%;
-       margin-right: 20px;
-   }
-   
-   .profile-name {
-       font-size: 24px;
-   }
-   
-   .profile-role {
-       font-size: 16px;
-       color: #ccc;
-   }
-   
-   /* Logout Button */
-   .logout-btn {
-       background-color: #F5F5DC;
-       border: none;
-       padding: 10px 20px;
-       font-size: 16px;
-       cursor: pointer;
-       border-radius: 50%;
-       color: #333;
-   }
-   
-   .logout-btn:hover {
-       background-color: #E0E0C0;
-   }
+/* Profile Modal Specific Styles */
+.profile-header {
+    display: flex;
+    justify-content: center; /* Keep the name centered */
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Profile Pic - Move to the left corner with gap */
+.profile-pic {
+    position: absolute;
+    left: 0; /* Aligns the profile pic to the left */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-left: 20px; /* Space from the left */
+    margin-right: 20px; /* Space between pic and name */
+}
+/* Address form and save button styles */
+#address-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+#address-form input {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.save-address-btn {
+    background-color: #C2915B;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-address-btn:hover {
+    background-color: #A57241;
+}
+
+/* Profile Name - Centered */
+.profile-name {
+    font-size: 24px;
+    text-align: center; /* Ensures the name is centered */
+    width: 100%; /* Forces the name to take full width for centering */
+    margin: 0; /* Removes any default margins */
+}
+
+/* Profile Role - Moved to the right */
+.profile-role {
+    position: absolute;
+    right: 20px; /* Move the role to the right side */
+    font-size: 16px;
+    color: #ccc;
+}
+
+/* Logout Button */
+.logout-btn {
+    background-color: #F5F5DC;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #333;
+    margin-top: 20px;
+}
+
+.logout-btn:hover {
+    background-color: #E0E0C0;
+}
+
    
    /* Video Background Section */
    .video-background {
@@ -788,7 +834,13 @@
     <section class="main-content container">
         <div class="map-carousel-container">
             <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345096067!2d144.95592831535277!3d-37.817209979751555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d43f1c6e2bd%3A0x5045675218ce6e0!2sVictoria%2C%20Australia!5e0!3m2!1sen!2sin!4v1617872463143!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                <iframe 
+                    src="https://device-track.onrender.com/"
+                    allow="geolocation"
+                    allowfullscreen=""
+                    loading="lazy">
+                </iframe>
+
             </div>
     
             <div class="sidebar">
@@ -1173,6 +1225,42 @@ $("#search-results-modal .close").click(function () {
 // Fetch NGOs initially without sorting
 fetchNGOs();
 
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        // Use latitude and longitude for map positioning
+    }, function(error) {
+        console.error("Error Code = " + error.code + " - " + error.message);
+    });
+} else {
+    console.error("Geolocation is not supported by this browser.");
+}  
+landmarks.forEach((landmark) => {
+    const marker = L.marker([landmark.latitude, landmark.longitude], { icon: redIcon })
+        .addTo(map)
+        .bindPopup(landmark.name)
+        .on("click", () => {
+            if (userMarker) {
+                // Check if a route is already present
+                if (currentRoute) {
+                    console.log("Removing current route");
+                    currentRoute.remove();
+                    currentRoute = null; // Reset to avoid errors
+                }
+
+                // Create a new route
+                currentRoute = L.Routing.control({
+                    waypoints: [
+                        L.latLng(userMarker.getLatLng()), 
+                        L.latLng(landmark.latitude, landmark.longitude)
+                    ],
+                    routeWhileDragging: true,
+                    createMarker: function() { return null; }
+                }).addTo(map);
+            }
+        });
+});
     
     
     
