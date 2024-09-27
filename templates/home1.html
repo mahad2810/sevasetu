@@ -15,36 +15,22 @@
 
 <!-- Inline CSS -->
 <style>
+    /* General Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+    }
+    
     .container {
-        width: 100%; /* Fluid width */
-        padding: 10px;
-        margin: 0 auto; /* Center the content */
-      }
-      
-      @media only screen and (min-width: 601px) and (max-width: 1024px) {
-        .container {
-          width: 90%;
-        }
-      }
-      
-      @media only screen and (min-width: 1025px) {
-        .container {
-          width: 80%;
-        }
-      }
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        background-color: rgba(220, 193, 166, 0.8); /* Match your navbar color */
-      }
-      img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-      }
-                  
+        width: 100%;
+        margin: 0 auto;
+    }  
    /* Sticky Navbar */
    header {
        position: sticky;
