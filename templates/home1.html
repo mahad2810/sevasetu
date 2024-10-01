@@ -836,6 +836,15 @@
     width: 100%; /* Ensure footer-bottom spans full width */
     box-sizing: border-box;
 }
+[data-aos] {
+    opacity: 0; /* Hide elements initially */
+    transition: opacity 0.5s ease-in-out; /* Smooth transition */
+}
+
+[data-aos].aos-animate {
+    opacity: 1; /* Show elements when animated */
+}
+
 /* Common animation class */
 .fade-in {
     opacity: 0;
