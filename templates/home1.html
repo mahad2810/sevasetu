@@ -11,7 +11,7 @@
 <!-- Font Awesome for social media icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 
 <!-- Inline CSS -->
 <style>
@@ -31,78 +31,120 @@
         width: 100%;
         margin: 0 auto;
     }  
-   /* Sticky Navbar */
-   header {
-       position: sticky;
-       top: 0;
-       width: 100%;
-       z-index: 2;
-       padding: 10px 0;
-       background-color: rgba(220, 193, 166, 1); /* Slightly transparent navbar */
-       backdrop-filter: blur(5px); /* Optional: Adds a blur effect to the navbar */
-       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visibility */
-   }
-   
-   /* Logo and Title Styles */
-   .logo-title {
-       display: flex;
-       align-items: center;
-       justify-content: flex-start;
-   }
-   
-   .logo {
-       padding:0;
-       width: 40px;
-       margin-left: 50px;
-       margin-right: 10px;
-       position: relative;
-       top: 10px; /* Reset logo position */
-   }
-   
-   .site-title {
-       color: #000; /* Change font color to black for visibility */
-       font-size: 20px;
-       position: relative;
-       top: 0; /* Reset title position */
-   }
-   
-   /* Navigation Links */
-   .nav-links {
-       list-style: none;
-       display: flex;
-       justify-content: flex-end;
-       align-items: center;
-       gap: 15px;
-   }
-   
-   .nav-links li a {
-       text-decoration: none;
-       color: #000; /* Change link color to black for visibility */
-       font-weight: bold;
-       position: relative;
-       background-color: rgba(255, 255, 255, 0.7); /* Light transparent background */
-       padding: 10px 20px;
-       border-radius: 60px; /* Rounded corners */
-   }
-   
-   .nav-links li a:hover {
-       background-color: rgba(255, 255, 255, 0.9); /* Slightly darker on hover */
-   }
-   
-   /* Donate Button Styles */
-   .nav-links li .donate-btn {
-       background-color: #C2915B; /* Complementary color for the Donate button */
-       color: #fff; /* White text */
-       padding: 10px 20px;
-       border-radius: 60px; /* Rounded corners */
-       font-weight: bold;
-       text-decoration: none;
-   }
-   
-   .nav-links li .donate-btn:hover {
-       background-color: #A57241; /* Darker shade on hover */
-   }
-   
+    /* Sticky Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0; /* Reduced padding for height adjustment */
+      background-color: rgba(220, 193, 166, 1); /* Light brown with slight transparency */
+      backdrop-filter: blur(5px); /* Adds a blur effect */
+      z-index: 1000;
+      border-radius: 0; /* Remove rounded corners */
+      height: 70px; /* Fixed height to avoid expansion with logo */
+    }
+    
+    /* Logo and Title Styles */
+    .logo-title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      top: 22px; /* Moves the logo down slightly */
+    }
+    
+    .logo {
+      width: 60px; /* Logo size control */
+      height: auto; /* Maintain aspect ratio */
+      margin-left: 20px;
+      margin-right: 10px;
+    }
+    
+    /* Site Title (if needed) */
+    .site-title {
+      color: #000; /* Black font for contrast */
+      font-size: 20px;
+    }
+    
+    /* Navigation Links */
+    .nav-links {
+      list-style: none;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      top: -20px; /* Moves the buttons up slightly */
+    }
+    
+    .nav-links li a {
+      text-decoration: none;
+      color: #000; /* Black links for contrast */
+      font-weight: bold;
+      position: relative;
+      top: -2px; /* Slightly reduced position */
+      background-color: rgba(255, 255, 255, 0.7); /* Light transparent background */
+      padding: 5px 15px; /* Reduced padding for more compact links */
+      border-radius: 30px; /* Reduced border-radius */
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    
+    .nav-links li a:hover {
+      background-color: rgba(255, 255, 255, 0.9); /* Slightly darker on hover */
+    }
+    
+    /* Donate Button Styles */
+    .nav-links li .donate-btn {
+      background-color: #C2915B; /* Complementary color for the Donate button */
+      color: #fff; /* White text */
+      padding: 10px 20px;
+      border-radius: 60px; /* Rounded corners */
+      font-weight: bold;
+      text-decoration: none;
+    }
+    
+    .nav-links li .donate-btn:hover {
+      background-color: #A57241; /* Darker shade on hover */
+    }
+    
+/* Video Background Section */
+.video-background {
+  position: relative;
+  margin-top: 0; /* Ensure no gap between navbar and video */
+  height: 100vh; /* Full height of the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+}
+
+/* Background video styles */
+#background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88%;
+  object-fit: cover;
+  z-index: 1; /* Video is behind content */
+}
+
+.content {
+  position: relative;
+  z-index: 2; /* Content sits above the video */
+  color: white;
+  text-align: center;
+}
+
    /* General Modal Styles */
 .modal {
     display: none; /* Hidden by default */
@@ -131,7 +173,26 @@
     backdrop-filter: blur(5px); /* Adds a blur effect for background content */
     overflow: auto; /* Scroll if content exceeds modal height */
 }
+/* Ensure all images in the carousel have the same dimensions */
+.carousel2 img {
+    width: 100%; /* Make the image take up the full width of the slide */
+    height: 300px; /* Set a fixed height for the images */
+    object-fit: cover; /* Ensure the image covers the area while keeping the aspect ratio */
+    border-radius: 10px; /* Optional: Add rounded corners */
+}
 
+/* Optional: Adjust the Slick slider container to ensure consistency */
+.carousel2 .slick-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ensures the container takes full height */
+}
+
+.carousel2 {
+    max-width: 100%; /* Make sure the carousel adapts to its container */
+    overflow: hidden; /* Hide any overflow */
+}
 /* Search Results Content (if needed) */
 .search-results-content {
     background-color: rgba(220, 193, 166, 0.8); /* Light brown background with transparency */
@@ -179,6 +240,7 @@
 /* Members Section */
 .member {
     margin-bottom: 20px;
+    text-align: center; /* Optional: Center-align the text and image */
 }
 
 .member p {
@@ -186,11 +248,14 @@
 }
 
 .member-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
+    width: 150px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height */
+    border-radius: 50%; /* Make it circular */
+    object-fit: cover; /* Ensure the image fits within the set dimensions while maintaining aspect ratio */
+    display: block;
+    margin: 0 auto; /* Center the image */
 }
+
 /* Image Responsiveness within Modal */
 .modal-content img {
     max-width: 100%; /* Responsive image */
@@ -279,30 +344,6 @@
     background-color: #E0E0C0;
 }
 
-   
-   /* Video Background Section */
-   .video-background {
-    position: relative;
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    overflow: hidden;
-    border-radius: 0;
-   }
-   
-   #background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1; /* Set video z-index higher than navbar to make it visible */
-    border-radius: 0;
-   }
    
    /* Search container remains the same */
    .search-container {
@@ -795,10 +836,72 @@
     width: 100%; /* Ensure footer-bottom spans full width */
     box-sizing: border-box;
 }
+/* Common animation class */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px); /* Default translation */
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.fade-in.animate {
+    opacity: 1;
+    transform: translateY(0); /* Reset translation */
+}
+
+/* Pop-up animation */
+.pop-up {
+    transform: scale(0.8);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.pop-up.animate {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Slide-in from left */
+.slide-in-left {
+    transform: translateX(-100px);
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.slide-in-left.animate {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Slide-in from right */
+.slide-in-right {
+    transform: translateX(100px);
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.slide-in-right.animate {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Additional styles for variety */
+.zoom-in {
+    transform: scale(0.5);
+    opacity: 0;
+    transition: transform 0.6s ease-in, opacity 0.6s ease-in;
+}
+
+.zoom-in.animate {
+    transform: scale(1);
+    opacity: 1;
+}
+
+
+
 </style>   
 
 </head>
 <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <header>
         <div class="container">
             <div class="logo-title">
@@ -814,7 +917,6 @@
         </div>
     </header>
     
-
     <section class="video-background">
         <video id="background-video" autoplay muted loop>
             <source src="{{ url_for('static', filename='background-video.mp4') }}" type="video/mp4">
@@ -828,107 +930,105 @@
     </section>
 
     <!-- About Us Section -->
-    <section class="about-section">
-        <h1 class="section-title">SEVASETU</h1>
-        <p class="section-subtitle">Empowering children in underserved communities to achieve their full potential through donations and support.</p>
+<section class="about-section">
+    <h1 class="section-title" data-aos="fade-up">SEVASETU</h1>
+    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Empowering children in underserved communities to achieve their full potential through donations and support.</p>
 
-        <div class="about-content">
-            <!-- Section for the First Image and Text (Who We Are) -->
-            <div class="about-item">
-                <div class="image-container">
-                    <img src="{{ url_for('static', filename='images/about1.jpg') }}" alt="Image representing who we are">
-                </div>
-                <h2 class="about-title">WHO WE ARE</h2>
-                <p class="about-text">We are Sevasetu, an online platform dedicated to connecting generous individuals with NGOs that work to improve the lives of underprivileged children. We strive to create an easy, transparent, and meaningful way for people to contribute to causes like children's education, food costs, clothing, and even organizing joyful events like birthday parties.</p>
+    <div class="about-content">
+        <!-- Section for the First Image and Text (Who We Are) -->
+        <div class="about-item" data-aos="fade-right">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='images/about1.jpg') }}" alt="Image representing who we are">
             </div>
+            <h2 class="about-title">WHO WE ARE</h2>
+            <p class="about-text">We are Sevasetu, an online platform dedicated to connecting generous individuals with NGOs that work to improve the lives of underprivileged children. We strive to create an easy, transparent, and meaningful way for people to contribute to causes like children's education, food costs, clothing, and even organizing joyful events like birthday parties.</p>
+        </div>
 
-            <!-- Section for the Second Image and Text (What We Do) -->
-            <div class="about-item">
-                <div class="image-container">
-                    <img src="{{ url_for('static', filename='images/about2.jpg') }}" alt="Image representing what we do">
-                </div>
-                <h2 class="about-title">WHAT WE DO</h2>
-                <p class="about-text">At Sevasetu, we enable users to find and donate to NGOs catering to various needs, including education, food, and essential supplies for children. Our platform also allows users to directly contact NGOs to organize special occasions such as birthday parties, bringing joy and creating memorable moments for children.</p>
+        <!-- Section for the Second Image and Text (What We Do) -->
+        <div class="about-item" data-aos="fade-left">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='images/about2.jpg') }}" alt="Image representing what we do">
             </div>
+            <h2 class="about-title">WHAT WE DO</h2>
+            <p class="about-text">At Sevasetu, we enable users to find and donate to NGOs catering to various needs, including education, food, and essential supplies for children. Our platform also allows users to directly contact NGOs to organize special occasions such as birthday parties, bringing joy and creating memorable moments for children.</p>
+        </div>
 
-            <!-- Section for the Third Text (Why We Do It) -->
-            <div class="about-item">
-                <h2 class="about-title">WHY WE DO IT</h2>
-                <p class="about-text">We believe that every child deserves a chance at a better future, and by bridging the gap between donors and NGOs, we help create opportunities for children to thrive. Our mission is to support NGOs in their efforts to uplift underprivileged communities and to make giving easy, impactful, and personal for everyone involved.</p>
+        <!-- Section for the Third Text (Why We Do It) -->
+        <div class="about-item" data-aos="zoom-in">
+            <h2 class="about-title">WHY WE DO IT</h2>
+            <p class="about-text">We believe that every child deserves a chance at a better future, and by bridging the gap between donors and NGOs, we help create opportunities for children to thrive. Our mission is to support NGOs in their efforts to uplift underprivileged communities and to make giving easy, impactful, and personal for everyone involved.</p>
+        </div>
+    </div>
+</section>
+
+<section class="main-content container">
+    <div class="map-carousel-container">
+        <div class="map-container" data-aos="fade-up">
+            <iframe 
+                src="https://device-track.onrender.com/"
+                allow="geolocation"
+                allowfullscreen=""
+                loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="sidebar" data-aos="fade-left">
+            <!-- Sorting Container -->
+            <div class="sort-container">
+                <label for="sort-options">Sort Items</label>
+                <div class="custom-select">
+                    <select id="sort-options" onchange="sortNGOs()">
+                        <option value="least-funded">Least Funded</option>
+                        <option value="most-funded">Most Funded</option>
+                        <option value="food-cost">Sort by Food Cost</option>
+                        <option value="num-children">Sort by Number of Children</option>
+                        <option value="nearest-ngo">Nearest NGO</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!-- NGO List Container -->
+            <div id="ngo-list" class="ngo-list"></div>
+        </div>
+    </div>
+</section>
+
+<div class="container" data-aos="fade-up">
+    <h1 class="heading">GET INVOLVED</h1>
+    <p class="subheading">Please contact us to get involved and partner with us in fulfilling a child's dream, one child at a time.</p>
+
+    <div class="section">
+        <div data-aos="fade-up">
+            <h2>MAKE A DONATION</h2>
+            <p>Your contributions to SevaSetu go directly to transforming lives. By donating, you can support children's education, provide meals, offer clothing, and contribute to raw materials for community projects. Additionally, you can make birthdays special for underprivileged children by organizing parties through our platform. Every donation makes a meaningful difference and helps us create a brighter, more inclusive future. Together, we can be the change. 100% of your donations are transparent and impactful. Let's shape a better tomorrow for these children.</p>
+            <li><a href="https://forms.gle/wSezQEPMUc8sEThZ6" target="_blank" class="button">Donate Now</a></li>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="100">
+            <h2>BE A PART OF SEVASETU TEAM</h2>
+            <p>SevaSetu thrives because of the passionate individuals who work behind the scenes. Join our dedicated team that handles everything from managing our website and supporting both users and NGOs, to expanding our social media presence. As part of SevaSetu, you'll help develop the platform, grow its reach, and ensure it continues to function seamlessly. Whether you're tech-savvy, a marketing genius, or simply someone passionate about making a difference, we'd love to have you on board.</p>
+            <a href="https://forms.gle/W2peiuFG6E9NKfyK7" target="_blank" class="button">JOIN THE TEAM</a>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="200">
+            <h2>DONATE YOUR INFLUENCE</h2>
+            <p>You don't always have to give money to make a big impact. By using your social media presence, you can help spread the word about SevaSetu and advocate for causes that matter. Every like, share, or post can make a child’s dream come true. Follow us on social media, engage with our content, and share how SevaSetu is working to uplift communities. Be the voice that brings awareness to the need for education, food, and care for children in need.</p>
+            <p><strong>#EmpowerWithSeva</strong></p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/sevasetu" class="social-icon" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/sevasetu_?utm_source=qr&igsh=MXM2ZjZsZGNlNGIzMQ==" class="social-icon" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/Sevasetufoundation" class="social-icon" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://twitter.com/sevasetu165191" class="social-icon" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
             </div>
         </div>
-    </section>
-
-    <section class="main-content container">
-        <div class="map-carousel-container">
-            <div class="map-container">
-                <iframe 
-                    src="https://device-track.onrender.com/"
-                    allow="geolocation"
-                    allowfullscreen=""
-                    loading="lazy">
-                </iframe>
-
-            </div>
-    
-            <div class="sidebar">
-                <!-- Sorting Container -->
-                <div class="sort-container">
-                    <label for="sort-options">Sort Items</label>
-                    <div class="custom-select">
-                        <select id="sort-options" onchange="sortNGOs()">
-                            <option value="least-funded">Least Funded</option>
-                            <option value="most-funded">Most Funded</option>
-                            <option value="nearest-ngo">Nearest NGO</option>
-                        </select>
-                    </div>
-                </div>
-            
-                <!-- NGO List Container -->
-                <div id="ngo-list" class="ngo-list"></div>
-            </div>
-            
-        </div>
-    </section>
-    
-    
-    <div class="container">
-        <h1 class="heading">GET INVOLVED</h1>
-        <p class="subheading">Please contact us to get involved and partner with us in fulfilling a child's dream, one child at a time.</p>
-
-        <div class="section">
-            <div>
-                <h2>MAKE A DONATION</h2>
-                <p>Your contributions to SevaSetu go directly to transforming lives. By donating, you can support children's education, provide meals, offer clothing, and contribute to raw materials for community projects. Additionally, you can make birthdays special for underprivileged children by organizing parties through our platform. Every donation makes a meaningful difference and helps us create a brighter, more inclusive future. Together, we can be the change. 100% of your donations are transparent and impactful. Let's shape a better tomorrow for these children.</p>
-                <li><a href="#" onclick="redirectToPage('donate')" class="button">Donate Now</a></li>
-            </div>
-            <div>
-                <h2>BE A PART OF SEVASETU TEAM</h2>
-                <p>SevaSetu thrives because of the passionate individuals who work behind the scenes. Join our dedicated team that handles everything from managing our website and supporting both users and NGOs, to expanding our social media presence. As part of SevaSetu, you'll help develop the platform, grow its reach, and ensure it continues to function seamlessly. Whether you're tech-savvy, a marketing genius, or simply someone passionate about making a difference, we'd love to have you on board.</p>
-                <a href="https://forms.gle/W2peiuFG6E9NKfyK7" target="_blank" class="button">JOIN THE TEAM</a>
-            </div>
-            <div>
-                <h2>DONATE YOUR INFLUENCE</h2>
-                <p>You don't always have to give money to make a big impact. By using your social media presence, you can help spread the word about SevaSetu and advocate for causes that matter. Every like, share, or post can make a child’s dream come true. Follow us on social media, engage with our content, and share how SevaSetu is working to uplift communities. Be the voice that brings awareness to the need for education, food, and care for children in need.</p>
-                <p><strong>#EmpowerWithSeva</strong></p>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/sevasetu" class="social-icon" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.instagram.com/sevasetu_?utm_source=qr&igsh=MXM2ZjZsZGNlNGIzMQ==" class="social-icon" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/Sevasetufoundation" class="social-icon" target="_blank">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://twitter.com/sevasetu165191" class="social-icon" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    
-                </div>
-            </div>
-        </div>
- 
+    </div>
+</div>
 <!-- About Us Popup Modal -->
 <!-- Modal Structure -->
 <div id="about-us-modal" class="modal">
@@ -1022,6 +1122,15 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
+   
+    AOS.init({
+        duration: 1000, // Animation duration in milliseconds
+        easing: 'ease-in-out', // Easing function
+        once: false, // Whether animation should happen only once
+        mirror: true          // Animation happens when elements come back into view
+
+    });
+   
     function redirectToPage(action) {
         // Redirect to /index route with the action parameter (login, signup, donate)
         window.location.href = `/index?action=${action}`;
@@ -1105,7 +1214,7 @@
                             cssEase: 'linear',
                             slidesToShow: 1,
                             slidesToScroll: 1,
-                            variableWidth: true,
+                            variableWidth: false,
                             infinite: true,
                             initialSlide: 1,
                             arrows: false,
@@ -1138,7 +1247,13 @@
             }
         });
     });
+
     // Function to fetch and display NGOs, with optional sorting
+    function sortNGOs() {
+        const sortOption = document.getElementById('sort-options').value;
+        fetchNGOs(sortOption); // This calls fetchNGOs with the selected sort option
+    }
+
 function fetchNGOs(sortOption = null) {
     const url = sortOption ? "/sort_ngos" : "/get_ngos";
     const fetchOptions = sortOption
@@ -1156,13 +1271,18 @@ function fetchNGOs(sortOption = null) {
               },
           };
 
-    fetch(url, fetchOptions)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
+          fetch(url, fetchOptions)
+          .then((response) => {
+              if (!response.ok) {
+                  if (response.status === 401) {
+                      alert("Please log in to sort by nearest NGO.");
+                  } else {
+                      alert("An error occurred while fetching NGOs.");
+                  }
+                  throw new Error("Network response was not ok");
+              }
+              return response.json();
+          })
         .then((data) => {
             const ngoList = document.getElementById("ngo-list");
             ngoList.innerHTML = ""; // Clear existing NGOs
@@ -1179,6 +1299,8 @@ function fetchNGOs(sortOption = null) {
                         <div class="ngo-name">${ngo.name}</div>
                         <div class="ngo-details">
                             <div class="ngo-funding">Funding: ₹ ${ngo.funding}</div>
+                            <div class="ngo-food-cost">Food Cost: ₹ ${ngo.food_cost}</div>
+                            <div class="ngo-num-children">Children Supported: ${ngo.num_children}</div>
                             ${
                                 ngo.distance
                                     ? `<div class="ngo-distance">Distance: ${ngo.distance.toFixed(2)} km</div>`

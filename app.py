@@ -272,43 +272,48 @@ def update_ngo():
 def sort_ngos():
     data = request.get_json()
     sort_option = data.get('sort_option')
-    
+
     ngos = list(mongo.db.ngos.find())  # Fetch all NGOs from the database
-    
-    # Sort by least funded
+
     if sort_option == 'least-funded':
         ngos_sorted = sorted(ngos, key=lambda ngo: ngo.get('donation_amount', 0))
-    
-    # Sort by most funded
+
     elif sort_option == 'most-funded':
         ngos_sorted = sorted(ngos, key=lambda ngo: ngo.get('donation_amount', 0), reverse=True)
-    
-    # Sort by nearest NGO
+
     elif sort_option == 'nearest-ngo':
         user_email = session.get('user_email')
-        
+
         if not user_email:
-            return jsonify({"error": "User must be logged in to sort by nearest NGO"}), 403
-        
+            return jsonify({"error": "Please log in to sort by nearest NGO."}), 401
+
         user = mongo.db.users.find_one({"email": user_email})
         user_address = user.get('address')
-        
-        if not user_address:
-            return jsonify({"error": "User address not found"}), 404
-        
-        ngos_sorted = sorted(ngos, key=lambda ngo: calculate_distance(user_address, ngo.get('address')) or float('inf'))
-    
-    else:
-        return jsonify({"error": "Invalid sort option"}), 400
 
-    # Prepare the NGO list for the response
+        if not user_address:
+            return jsonify({"error": "Please provide your address to sort by nearest NGO."}), 400
+
+        ngos_sorted = sorted(ngos, key=lambda ngo: calculate_distance(user_address, ngo.get('address')) or float('inf'))
+
+    elif sort_option == 'food-cost':
+        ngos_sorted = sorted(ngos, key=lambda ngo: ngo.get('food_cost', 0))
+
+    elif sort_option == 'num-children':
+        ngos_sorted = sorted(ngos, key=lambda ngo: ngo.get('num_children', 0))
+
+    else:
+        return jsonify({"error": "Invalid sort option."}), 400
+
     ngo_list = [{
         'name': ngo.get('name'),
         'funding': ngo.get('donation_amount'),
-        'distance': calculate_distance(user.get('address'), ngo.get('address')) if sort_option == 'nearest-ngo' else None
+        'distance': calculate_distance(user.get('address'), ngo.get('address')) if sort_option == 'nearest-ngo' else None,
+        'food_cost': ngo.get('food_cost'),
+        'num_children': ngo.get('num_children')
     } for ngo in ngos_sorted]
 
     return jsonify(ngo_list)
+
 
 # Route to send an email
 @app.route('/send_email', methods=['POST'])
