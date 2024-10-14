@@ -242,14 +242,17 @@ def get_ngos():
     ngos = list(ngo_collection.find({}, {'_id': 0}))
     return jsonify(ngos)
 
+
+    
 @app.route('/ngo_details/<ngo_name>', methods=['GET'])
 def ngo_details(ngo_name):
-    ngo = ngo_collection.find_one({"name": ngo_name}, {'_id': 0})  # Adjust as needed
+    ngo = ngo_collection.find_one({"name": ngo_name}, {'_id': 0})
+    print("NGO Fetched:", ngo)  # Log the entire NGO object
     if ngo:
         return jsonify(ngo)
     else:
         return jsonify({'error': 'NGO not found'}), 404
-    
+
 
 @app.route('/update_ngo', methods=['POST'])
 def update_ngo():

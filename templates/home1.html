@@ -1338,7 +1338,6 @@ function fetchNGOs(sortOption = null) {
             console.error("Error fetching NGOs:", error);
         });
 }
-
 function showNGODetails(ngoName) {
     fetch(`/ngo_details/${encodeURIComponent(ngoName)}`)
         .then(response => {
@@ -1348,21 +1347,23 @@ function showNGODetails(ngoName) {
             return response.json();
         })
         .then(ngo => {
-            console.log(ngo); // Log the NGO object for debugging
+            console.log("NGO Response:", ngo);  // Debug the fetched NGO object
 
-            let imagesHtml = '';  // Carousel for images
-            if (ngo.images && ngo.images.length > 0) {
+            // Adjust for carousel_images field
+            let imagesHtml = '';  
+            const images = ngo.carousel_images || [];  // Use correct field name
+
+            if (images.length > 0) {
                 imagesHtml += '<div class="wrapper"><div class="search-images-carousel carousel-container carousel2">';
-                ngo.images.forEach(imageUrl => {
-                    // Construct the full URL by prepending '/static/' to the image path
-                    imagesHtml += `<div><img src="/${imageUrl}" alt="Image"></div>`;
+                images.forEach(imageUrl => {
+                    imagesHtml += `<div><img src="/${imageUrl}" alt="Image"></div>`;  // Adjust path
                 });
                 imagesHtml += '</div></div>';
             } else {
-                imagesHtml = '<p>No images available</p>'; // This will show if the images array is empty
+                imagesHtml = '<p>No images available</p>';
             }
 
-            // Append NGO details to modal content
+            // Update modal content
             $('#search-results').html(`
                 <div class="search-result-item">
                     ${imagesHtml}
@@ -1376,23 +1377,25 @@ function showNGODetails(ngoName) {
                     </div>
                 </div>
             `);
-            
-            // Initialize Slick Carousel for images
-            if (ngo.images && ngo.images.length > 0) {
-                $('.carousel2').slick({
-                    speed: 5000,
-                    autoplay: true,
-                    autoplaySpeed: 0,
-                    centerMode: true,
-                    cssEase: 'linear',
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    variableWidth: true,
-                    infinite: true,
-                    arrows: false,
-                    buttons: false
-                });
-            }
+
+            // Initialize Slick Carousel after rendering images
+            setTimeout(() => {
+                if (images.length > 0) {
+                    $('.carousel2').slick({
+                        speed: 5000,
+                        autoplay: true,
+                        autoplaySpeed: 0,
+                        centerMode: true,
+                        cssEase: 'linear',
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        variableWidth: true,
+                        infinite: true,
+                        arrows: false,
+                        buttons: false
+                    });
+                }
+            }, 100);
 
             // Display the modal with NGO details
             $('#search-results-modal').css('display', 'block');
