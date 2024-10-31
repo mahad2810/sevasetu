@@ -989,8 +989,8 @@
                     <select id="sort-options" onchange="sortNGOs()">
                         <option value="least-funded">Least Funded</option>
                         <option value="most-funded">Most Funded</option>
-                        <option value="food-cost">Sort by Food Cost</option>
-                        <option value="num-children">Sort by Number of Children</option>
+                        <option value="food-cost">Food Cost</option>
+                        <option value="num-children">Number of Children</option>
                         <option value="nearest-ngo">Nearest NGO</option>
                     </select>
                 </div>
@@ -1310,11 +1310,7 @@ function fetchNGOs(sortOption = null) {
                             <div class="ngo-funding">Funding: ₹ ${ngo.funding}</div>
                             <div class="ngo-food-cost">Food Cost: ₹ ${ngo.food_cost}</div>
                             <div class="ngo-num-children">Children Supported: ${ngo.num_children}</div>
-                            ${
-                                ngo.distance
-                                    ? `<div class="ngo-distance">Distance: ${ngo.distance.toFixed(2)} km</div>`
-                                    : ""
-                            }
+                            
                         </div>
                     </div>
                 `;
