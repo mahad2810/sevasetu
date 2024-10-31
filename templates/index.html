@@ -137,9 +137,40 @@
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                     <div class="text-center mt-3">
+                        <a href="#" class="toggle-link" onclick="toggleForgotPassword()">Forgot Password?</a>
+                    </div>
+                    <div class="text-center mt-3">
                         Don't have an account? <span class="toggle-link" onclick="toggleForm(false)">Sign up</span>
                     </div>
                 </form>
+                <div id="forgotPasswordModal" style="display: none;">
+                    <h2 class="text-center">Forgot Password</h2>
+                
+                    <!-- Forgot Password Form -->
+                    <form id="forgotPasswordForm" method="POST" onsubmit="sendOtp(event);">
+                        <div class="mb-3">
+                            <label for="forgotEmail" class="form-label">Enter your Email</label>
+                            <input type="email" class="form-control" id="forgotEmail" name="forgotEmail" placeholder="Enter your email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Send OTP</button>
+                    </form>
+                
+                    <!-- OTP and New Password Form -->
+                    <form id="resetPasswordForm" action="/reset_password" method="POST" style="display:none;">
+                        <input type="hidden" id="resetEmail" name="forgotEmail">
+                        <div class="mb-3">
+                            <label for="otp" class="form-label">Enter OTP</label>
+                            <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter new password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Reset Password</button>
+                    </form>
+                </div>
+                
+                    
 
                 <form id="signupForm" action="/signup" method="POST" style="display:none;" onsubmit="return validateSignupForm()">
                     <div class="mb-3">
@@ -183,9 +214,45 @@
         function toggleForm(isLogin) {
             document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
             document.getElementById('signupForm').style.display = isLogin ? 'none' : 'block';
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'none';
             document.getElementById('formTitle').textContent = isLogin ? 'Login' : 'Sign Up';
         }
+    
+        // Toggle forgot password modal visibility
+    function toggleForgotPassword() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('forgotPasswordModal').style.display = 'block';
+        document.getElementById('forgotPasswordForm').style.display = 'block';
+        document.getElementById('resetPasswordForm').style.display = 'none';
+    }
 
+    // Send OTP with AJAX
+    function sendOtp(event) {
+        event.preventDefault();
+        const email = document.getElementById('forgotEmail').value;
+
+        fetch('/forgot_password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ forgotEmail: email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('resetEmail').value = email; // Set email for reset form
+                document.getElementById('forgotPasswordForm').style.display = 'none';
+                document.getElementById('resetPasswordForm').style.display = 'block';
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    
         // Auto-hide flash messages after 3 seconds
         setTimeout(function() {
             var alerts = document.querySelectorAll('.alert');
@@ -196,7 +263,8 @@
                     alert.style.display = 'none';
                 }, 500); // 0.5s to allow for the fade-out effect
             });
-        }, 1000); // Time in milliseconds (3000ms = 3s)
+        }, 3000); // Time in milliseconds (3000ms = 3s)
     </script>
+    
 </body>
 </html>

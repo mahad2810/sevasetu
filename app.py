@@ -1,3 +1,4 @@
+import random  # Add this line
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -90,7 +91,7 @@ def login():
             session['user_email'] = email
             flash("Admin login successful!", "success")
             return redirect(url_for('admin'))
-
+        
         session['user_email'] = email
         flash("Login successful!", "success")
         return redirect(url_for('home_page'))
@@ -98,6 +99,59 @@ def login():
         flash("Invalid email or password. Please try again.", "danger")
         return redirect(url_for('index_redirect'))
 
+# Email Sending Function
+def send_email_with_otp(email, otp):
+    subject = "Your OTP for Password Reset"
+    body = f"Your OTP for resetting the password is: {otp}"
+
+    message = MIMEMultipart()
+    message['From'] = 'thesevasetufoundation@gmail.com'
+    message['To'] = email
+    message['Subject'] = subject
+    message.attach(MIMEText(body, 'plain'))
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login('thesevasetufoundation@gmail.com', 'rnri bops ohnz hbbu')
+        server.sendmail(message['From'], message['To'], message.as_string())
+        server.quit()
+        print(f"OTP sent to {email}")
+    except Exception as e:
+        print(f"Failed to send email: {str(e)}")
+
+# Forgot Password Route
+@app.route('/forgot_password', methods=['POST'])
+def forgot_password():
+    data = request.get_json()
+    email = data.get('forgotEmail')
+    user = mongo.db.users.find_one({"email": email})
+    
+    if user:
+        otp = str(random.randint(100000, 999999))
+        mongo.db.otp_store.insert_one({'email': email, 'otp': otp})
+        send_email_with_otp(email, otp)
+        return jsonify({"success": True, "message": "OTP has been sent to your email."})
+    else:
+        return jsonify({"success": False, "message": "No account found with that email."})
+# Reset Password Route
+@app.route('/reset_password', methods=['POST'])
+def reset_password():
+    email = request.form.get('forgotEmail')
+    otp = request.form.get('otp')
+    new_password = request.form.get('newPassword')
+
+    otp_record = mongo.db.otp_store.find_one({"email": email, "otp": otp})
+    
+    if otp_record:
+        hashed_password = generate_password_hash(new_password)
+        mongo.db.users.update_one({'email': email}, {'$set': {'password': hashed_password}})
+        mongo.db.otp_store.delete_one({"email": email, "otp": otp})
+        flash("Password has been reset successfully.", "success")
+    else:
+        flash("Invalid OTP. Please try again.", "danger")
+    
+    return redirect(url_for('index_redirect'))
 @app.route('/signup', methods=['POST'])
 def signup():
     first_name = request.form.get('signupFirstName')
@@ -130,9 +184,44 @@ def signup():
     flash("Signup successful! Redirecting to home page.", "success")
     
     # Send a thank-you email to the user after signup
-    send_email_to_user(email, first_name)
+    send_signup_email(email, first_name)
     
     return redirect(url_for('home_page'))
+
+def send_signup_email(email, first_name):
+    subject = "Welcome to SevaSetu!"
+    body = f"""
+    Dear {first_name},
+
+    Thank you for signing up with SevaSetu!
+
+    We are excited to have you on board and hope you enjoy using our platform to support the causes you care about. 
+    By joining us, you are now part of a community dedicated to making a positive impact in the lives of those in need.
+
+    Feel free to explore our website, learn about various initiatives, and consider contributing to causes close to your heart.
+    If you have any questions, we're here to help!
+
+    Warm regards,
+    SevaSetu Team
+    """
+    send_email_message(email, subject, body)
+
+# Generalized email-sending function
+def send_email_message(email, subject, body):
+    message = MIMEMultipart()
+    message['From'] = 'thesevasetufoundation@gmail.com'
+    message['To'] = email
+    message['Subject'] = subject
+    message.attach(MIMEText(body, 'plain'))
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login('thesevasetufoundation@gmail.com', 'rnri bops ohnz hbbu')  # Replace with your credentials
+        server.sendmail(message['From'], message['To'], message.as_string())
+        server.quit()
+    except Exception as e:
+        print(f"Failed to send email: {str(e)}")
 
 @app.route('/home')
 def home_page():
