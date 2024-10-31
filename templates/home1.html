@@ -16,21 +16,35 @@
 <!-- Inline CSS -->
 <style>
     /* General Styles */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px; /* Add some padding to avoid content touching edges on smaller screens */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 20px; /* Adjust padding for better readability on mobile */
     }
     
     body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
+        font-size: 14px; /* Smaller font size for smaller screens */
     }
-    
-    .container {
-        width: 100%;
-        margin: 0 auto;
-    }  
+}
+
     /* Sticky Navbar */
     header {
       position: sticky;
