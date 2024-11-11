@@ -84,50 +84,72 @@ body {
     }
     
     /* Navigation Links */
-    .nav-links {
-      list-style: none;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 15px;
-      position: relative;
-      top: -20px; /* Moves the buttons up slightly */
-    }
-    
-    .nav-links li a {
-      text-decoration: none;
-      color: #000; /* Black links for contrast */
-      font-weight: bold;
-      position: relative;
-      top: -2px; /* Slightly reduced position */
-      background-color: rgba(255, 255, 255, 0.7); /* Light transparent background */
-      padding: 5px 15px; /* Reduced padding for more compact links */
-      border-radius: 30px; /* Reduced border-radius */
-      transition: background-color 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-    }
-    
-    .nav-links li a:hover {
-      background-color: rgba(255, 255, 255, 0.9); /* Slightly darker on hover */
-    }
-    
-    /* Donate Button Styles */
-    .nav-links li .donate-btn {
-      background-color: #C2915B; /* Complementary color for the Donate button */
-      color: #fff; /* White text */
-      padding: 10px 20px;
-      border-radius: 60px; /* Rounded corners */
-      font-weight: bold;
-      text-decoration: none;
-    }
-    
-    .nav-links li .donate-btn:hover {
-      background-color: #A57241; /* Darker shade on hover */
-    }
-    
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #333;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Main Dropdown Toggle Button */
+        .dropdown-toggle {
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #333;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .dropdown-toggle:hover {
+            background-color: #444;
+        }
+
+        /* Dropdown Menu Styles */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            min-width: 150px;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu a {
+            padding: 10px 20px;
+            color: #ffffff;
+            text-align: left;
+            font-weight: normal;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #444;
+        }
+
+        /* Show dropdown on click */
+        .nav-links li:hover .dropdown-menu {
+            display: block;
+        }
 /* Video Background Section */
 .video-background {
   position: relative;
@@ -931,10 +953,15 @@ body {
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
             </div>
             <ul class="nav-links">
-                <li><a href="#" id="about-us-link" data-modal="about-us-modal">About Us</a></li>
-                <li><a href="#" id="contact-us-link" data-modal="contact-us-modal">Contact Us</a></li>
-                <li><a href="#" onclick="redirectToPage('login')">Login</a></li>
-                <li><a href="#" onclick="redirectToPage('donate')" class="donate-btn">Donate</a></li>
+                <li>
+                    <span class="dropdown-toggle">Dropdown</span>
+                    <div class="dropdown-menu">
+                        <a href="#" id="about-us-link" data-modal="about-us-modal">About Us</a>
+                        <a href="#" id="contact-us-link" data-modal="contact-us-modal">Contact Us</a>
+                        <a href="#" onclick="redirectToPage('login')">Login</a>
+                        <a href="#" onclick="redirectToPage('donate')" class="donate-btn">Donate</a>
+                    </div>
+                </li>
             </ul>
             
         </div>
@@ -1469,7 +1496,19 @@ landmarks.forEach((landmark) => {
             }
         });
 });
-    
+    // JavaScript to toggle dropdown on click
+    document.querySelector('.dropdown-toggle').addEventListener('click', function() {
+        const dropdownMenu = this.nextElementSibling;
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', function(e) {
+        const dropdown = document.querySelector('.dropdown-menu');
+        if (!dropdown.contains(e.target) && e.target !== document.querySelector('.dropdown-toggle')) {
+            dropdown.style.display = 'none';
+        }
+    });
     
     
 </script>
