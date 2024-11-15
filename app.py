@@ -433,7 +433,7 @@ def send_email_to_user(email, first_name):
     To help us improve and ensure that we continue delivering meaningful outcomes, we would love to hear your feedback. 
     Please take a moment to fill out the feedback form below:
 
-    https://forms.gle/mCoEqqA2oZwdHVe6A
+    https://docs.google.com/forms/d/e/1FAIpQLSdaPwCORVr1Ajh5mW90LYpiTgXI0yupm28WYnnKlZ7dXgpixA/viewform?usp=sf_link
 
     Your insights are invaluable to us, and your feedback will help us enhance our services for both donors and beneficiaries alike.
 
